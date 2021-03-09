@@ -1,0 +1,357 @@
+doctype html
+html(lang='en' dir='')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1')
+    meta(http-equiv='X-UA-Compatible' content='ie=edge')
+    title Subscription Plans
+    link(rel='shortcut icon' href='/auth/assets/img/stisla-fill.svg' type='image/x-icon')
+    link(href='https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900' rel='stylesheet')
+    link(href='/accounts/dist-assets/css/themes/lite-blue.min.css' rel='stylesheet')
+    link(href='/accounts/dist-assets/css/plugins/perfect-scrollbar.min.css' rel='stylesheet')
+    link(rel="stylesheet", href="/accounts/dist-assets/css/plugins/datatables.min.css" )
+    style. 
+     #custom 
+     {
+       display:none
+     }
+  body.text-left
+    .app-admin-wrap.layout-sidebar-large
+      .main-header
+        .logo
+         if user.type === 'Administrator'
+          img(src=user.company_icon style='width:100px' alt='')
+         if user.type ==='Company'
+          img(src=user.company_icon style='width:80px' alt='')
+       
+        .menu-toggle
+          div
+          div
+          div
+        .d-flex.align-items-center
+          
+         
+        div(style='margin: auto')
+        .header-part-right
+          // Full screen toggle
+          i.i-Full-Screen.header-icon.d-none.d-sm-inline-block(data-fullscreen='')
+          
+          
+          .dropdown
+            .user.col.align-self-end
+              
+              img#userDropdown(src='/assets/images/avatar.png' alt='' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              .dropdown-menu.dropdown-menu-right(aria-labelledby='userDropdown')
+                .dropdown-header
+                  i.i-Lock-User.mr-1
+                  | #{user.first_name} #{user.last_name}
+                
+                a.dropdown-item(href='/logout') Sign out
+      .side-content-wrap
+        
+
+        .sidebar-left.open.rtl-ps-none(data-perfect-scrollbar='' data-suppress-scroll-x='true')
+          ul.navigation-left
+            
+            
+            if user.role ==='Administrator' || user.role ==='Finance'
+             li.nav-item
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Financial
+                span.nav-text Transactions  
+              .triangle
+            if user.role ==='Administrator'
+             li.nav-item(data-item='customers')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Business-Mens
+                span.nav-text Customers
+              .triangle
+            if user.role === 'Administrator'
+             li.nav-item(data-item='catalog')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Belt-3
+                span.nav-text Catalog
+              .triangle
+            if user.role === 'Administrator' || user.role ==='Technical'
+             li.nav-item(data-item='checkout')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Checkout
+                span.nav-text Checkout
+              .triangle
+            if user.role === 'Administrator' || user.role ==='Finance'
+             li.nav-item
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Statistic
+                span.nav-text Reports
+              .triangle
+            if user.role === 'Administrator'
+             li.nav-item(data-item='business_accounts')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Dashboard
+                span.nav-text Business Accounts
+              .triangle
+            if user.role ==='Administrator' || user.role ==='Technical'
+             li.nav-item(data-item='developer_tools')
+               a.nav-item-hold(href='#')
+                i.nav-icon.i-Geek
+                span.nav-text Developer Tools
+               .triangle
+            
+        .sidebar-left-secondary.rtl-ps-none(data-perfect-scrollbar='' data-suppress-scroll-x='true')
+            // Customers
+            ul.childNav(data-parent='customers')
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-3
+                  span.item-name Subscribers
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-4
+                  span.item-name Audience
+            // Catalog
+            ul.childNav(data-parent='catalog')
+              li.nav-item
+                a(href='/company/products')
+                  i.nav-icon.i-Plaxo
+                  span.item-name Products
+              li.nav-item
+                a(href='/company/subscription_plans')
+                  i.nav-icon.i-Road-2
+                  span.item-name Subscription Plans
+              
+              li.nav-item
+                a(href='/company/coupons')
+                  i.nav-icon.i-Tag-4
+                  span.item-name Coupons 
+              
+            // Checkout
+            ul.childNav(data-parent='checkout')
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-3
+                  span.item-name Checkout Settings
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-4
+                  span.item-name Sales Tax Settings
+            // Business Accounts
+            ul.childNav(data-parent='business_accounts')
+              li.nav-item
+                a(href='/company/account_settings')
+                  i.nav-icon.i-Data-Settings
+                  span.item-name Account Setting
+              li.nav-item
+                a(href='/company/balance_currency')
+                  i.nav-icon.i-Circular-Point
+                  span.item-name Balance Currency 
+              li.nav-item
+                a(href='/company/team_members')
+                  i.nav-icon.i-Conference
+                  span.item-name Team Members
+            // Developer Tools
+            ul.childNav(data-parent='developer_tools')
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-3
+                  span.item-name Alert & Webhooks
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-4
+                  span.item-name Authentication
+        .sidebar-overlay        
+            
+        
+          
+          
+          
+        
+      // =============== Left side End ================
+      .main-content-wrap.sidenav-open.d-flex.flex-column
+        // ============ Body content start =============
+        .row 
+         .col-md-12
+          != messages('message', locals)
+        .row 
+         .col-md-12 
+            .card 
+                .card-header 
+                      .card-title
+                        h4 Subscription Plans
+                         button.btn.btn-primary(style='float:right' data-toggle='modal' data-target='#add_subscription') Add subscription plan
+                .card-body 
+                  table#deafult_ordering_table.display.table.table-striped.table-bordered(style='width:100%')
+                      thead
+                        tr
+                          th
+                          th Name
+                          th Custom Message
+                          th Billing Interval
+                          th Every / Period
+                          th Trial Period 
+                          th Quantity
+                          th Currency ( Default )
+                          th Prices
+                          th Actions
+                      tbody
+                       each x in subscriptions 
+                        tr 
+                          td  
+                           img(src=x.icon,style='width:20px', alt="")
+                          td=x.plan_name
+                          td
+                           if x.checkout_message !==''
+                            | #{x.checkout_message}
+                           if x.checkout_message ===''
+                            | ....
+                          td=x.billing_interval 
+                          td 
+                           if x.every > 0 
+                            | #{x.every} / #{x.period} 
+                           if x.every === 0
+                             | .... 
+                          td
+                           if x.trial_period !==""
+                            | #{x.trial_period} 
+                           if x.trial_period === ""
+                            | ....
+                          td 1
+                          td #{currency.name}
+                          td 
+                            each y in x.currencies 
+                             if y.currency ===  currency.name
+                               span.badge.badge-dark #{y.currency} #{y.amount}
+                             if y.currency !==  currency.name
+                               span.badge.badge-success #{y.currency} #{y.amount}
+                             br
+                          td 
+                           a(href="/company/delete_subscription_plan/#{x._id}")
+                              i.i-Close-Window(style='color:red') 
+
+                 
+
+        
+  // ADD SUBSCRIPTION
+  .modal.fade#add_subscription(tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+        .modal-dialog.modal-lg
+          .modal-content
+            .modal-header
+              h5#exampleModalCenterTitle.modal-title Add subscription plan
+              button.close(type='button' data-dismiss='modal' aria-label='Close')
+                span(aria-hidden='true') ×
+            .modal-body
+              form.form(action="/company/add_subscription_plan",method='POST', enctype="multipart/form-data")
+                 .row 
+                  .col-md-4
+                   .form-group  
+                    label(for="plan_name") Plan Name 
+                    input.form-control(type="text" name='plan_name' required) 
+                  .col-md-4
+                   .form-group  
+                    label(for="checkout_message") Checkout Message ( Optional )
+                    textarea.form-control(name="checkout_message", cols="30", rows="5", )
+                  .col-md-4 
+                   .form-group 
+                    label(for="set_icon") Set Icon
+                    br
+                    img(src="/assets/images/icon.png", alt="", style='width:50px' ) 
+                    br
+                    br
+                    input.form-control(type="file" name='file' accept='.jpg, .jpeg, .png')
+                 
+                 hr 
+                 .row 
+                  .col-md-12 
+                   h4 Subscription Plan Pricing
+                 .row 
+                  .col-md-12 
+                   .form-group 
+                    label(for="") Price ( Currency: USD)
+                    input.form-control#default_currency(type='hidden' value=currency.name name='default_currency')
+                    input.form-control#price(type="number", name='price' required,min=1) 
+                   .form-group
+                    each x in currencies
+                     if x.name === currency.name 
+                      .row 
+                       .col-md-3
+                        label.checkbox.checkbox-dark
+                            input(type='checkbox' name="currency" required  checked value=x.name  )
+                            span #{x.name} ( Default )
+                            span.checkmark
+                       
+                       .col-md-3(style='float:left')
+                        input.form-control(type="text" value=x.name name='price_currency' readonly )
+                     if x.name !== currency.name
+                      .row
+                       .col-md-3
+                        label.checkbox.checkbox-dark
+                            input(type='checkbox' name="currency"  value=x.name )
+                            span #{x.name}
+                            span.checkmark
+                       
+                       .col-md-3(style='float:left')
+                        input.form-control(type="text" value=x.name name='price_currency' readonly )
+                 hr
+                 .row 
+                   .col-md-4
+                    .form-group
+                      label(for="billing_interval") Billing Interval 
+                      select.form-control#billing_interval(name="billing_interval" required)
+                        option(value="") Choose one option 
+                        option(value="Daily") Daily 
+                        option(value="Monthly") Monthly 
+                        option(value="3 Months") 3 Months 
+                        option(value="6 Months") 6 Months
+                        option(value="Yearly") Yearly  
+                        option(value="Custom") Custom
+                   #custom 
+                    .col-md-4 
+                     .row 
+                      .col-md-3(style='margin-right:5px')
+                        .form-group
+                          label(for="every") Every
+                          input.form-control(type="number",name='every',style='width:58px' min=1) 
+                      .col-md-1
+                      .col-md-5
+                        .form-group
+                          label(for="period") Period
+                          select.form-control(name='period',style='width:80px') 
+                            option(value="Days") Days 
+                            option(value="Weeks") Weeks 
+                            option(value="Months") Months 
+                            option(value="Years") Years   
+                   .col-md-4
+                     .form-group
+                          label(for="trial_period") Trial Period ( Optional )
+                          input.form-control(type="number",name='trial_period', min=1,placeholder="Days" )
+                   .col-md-4
+                        .form-group
+                          br
+                          label.checkbox.checkbox-dark
+                            input(type='checkbox' name="quantity")
+                            span Enable Quantity ( Optional )
+                            span.checkmark
+                 hr
+                 .row 
+                  .col-md-12 
+                   
+                    button.btn.btn-primary(type='submit') Save
+                  
+                      
+                  
+                       
+            .modal-footer
+              button.btn.btn-secondary(type='button' data-dismiss='modal') Close                
+  script(src='/accounts/dist-assets/js/plugins/jquery-3.3.1.min.js')
+  script(src='/accounts/dist-assets/js/plugins/bootstrap.bundle.min.js')
+  script(src='/accounts/dist-assets/js/plugins/perfect-scrollbar.min.js')
+  script(src='/accounts/dist-assets/js/scripts/script.min.js')
+  script(src='/accounts/dist-assets/js/scripts/sidebar.large.script.min.js')
+  script(src='/accounts/dist-assets/js/plugins/datatables.min.js')
+  script(src='/accounts/dist-assets/js/scripts/datatables.script.min.js')
+  script(src='/accounts/dist-assets/js/scripts/customizer.script.min.js') 
+  script(src="/libraries/get_currency.js" type='text/javascript')     
+  script(src="/libraries/billing_interval.js" type='text/javascript') 
+      
+      
+      
+     

@@ -1,0 +1,409 @@
+doctype html
+html(lang='en' dir='')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1')
+    meta(http-equiv='X-UA-Compatible' content='ie=edge')
+    title Dashboard
+    link(rel='shortcut icon' href='/auth/assets/img/stisla-fill.svg' type='image/x-icon')
+    link(href='https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900' rel='stylesheet')
+    link(href='/accounts/dist-assets/css/themes/lite-blue.min.css' rel='stylesheet')
+    link(href='/accounts/dist-assets/css/plugins/perfect-scrollbar.min.css' rel='stylesheet')
+    link(rel="stylesheet", href="/accounts/dist-assets/css/plugins/datatables.min.css" )
+  body.text-left
+    .app-admin-wrap.layout-sidebar-large
+      .main-header
+        .logo
+          img(src=user.company_icon style='width:100px' alt='')
+       
+        .menu-toggle
+          div
+          div
+          div
+        .d-flex.align-items-center
+          
+         
+        div(style='margin: auto')
+        .header-part-right
+          // Full screen toggle
+          i.i-Full-Screen.header-icon.d-none.d-sm-inline-block(data-fullscreen='')
+          
+          
+          .dropdown
+            .user.col.align-self-end
+              img#userDropdown(src='/assets/images/avatar.png' alt='' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              .dropdown-menu.dropdown-menu-right(aria-labelledby='userDropdown')
+                .dropdown-header
+                  i.i-Lock-User.mr-1
+                  | #{user.first_name} #{user.last_name}
+                
+                a.dropdown-item(href='/logout') Sign out
+      .side-content-wrap
+        .sidebar-left.open.rtl-ps-none(data-perfect-scrollbar='' data-suppress-scroll-x='true')
+          ul.navigation-left
+            li.nav-item
+              a.nav-item-hold(href='/administrator/')
+                i.nav-icon.i-Bar-Chart
+                span.nav-text Dashboard
+              .triangle
+            li.nav-item
+              a.nav-item-hold(href='/administrator/settings')
+                i.nav-icon.i-Gear
+                span.nav-text Settings
+              .triangle
+            
+            
+            
+        
+          
+          
+          
+        
+      // =============== Left side End ================
+      .main-content-wrap.sidenav-open.d-flex.flex-column
+        // ============ Body content start =============
+        .row 
+         .col-md-12 
+          != messages('message', locals)
+        .row 
+         .col-md-12
+          .card 
+           .card-header
+            .card-title 
+              h4 Registered Companies
+           
+               button.btn.btn-primary(type='button' data-toggle='modal' data-target='#add_new_company' style='float:right') Add new company
+           .card-body
+            .table-responsive
+                table#deafult_ordering_table.display.table.table-striped.table-bordered(style='width:100%')
+                  thead
+                    tr
+                      th
+                      th Vendor Id
+                      th Company Name
+                      th User Name
+                      th Email
+                      th DB Name
+                      th Status
+                      th Actions
+                  tbody
+                    each x in companies 
+                      tr   
+                        td(style='text-align:center')
+                          img(src=x.company_icon, style='width:50px;width:50px', alt="")
+                        td=x.vendor_id
+                        td=x.company_name 
+                        td #{x.first_name} #{x.last_name} 
+                        td #{x.username} 
+                        td #{x.db_name}
+                        td 
+                          if x.enabled === true 
+                           span.badge.badge-success True 
+                          if x.enabled === false 
+                           span.badge.badge-danger False 
+                        td 
+                          a(href="#") 
+                          i.text-20.i-Eye
+      // =============== Modals ========================
+      .modal.fade#add_new_company(tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true')
+        .modal-dialog.modal-lg
+          .modal-content
+            .modal-header
+              h5#exampleModalCenterTitle.modal-title Add new company
+              button.close(type='button' data-dismiss='modal' aria-label='Close')
+                span(aria-hidden='true') ×
+            .modal-body
+               form.form(action="/administrator/add_new_company",method='POST')
+                  .row 
+                    .col-md-4  
+                      .form-group
+                       label(for="") Firstname 
+                       input.form-control(type="text" name='first_name' required='') 
+                    .col-md-4  
+                      .form-group
+                       label(for="") Lastname
+                       input.form-control(type="text" name='last_name' required='') 
+                    .col-md-4  
+                      .form-group
+                       label(for="") Email
+                       input.form-control(type="email" name='email' required='')   
+                  .row 
+                    .col-md-4  
+                      .form-group
+                       label(for="") Company Name
+                       input.form-control(type="text" name='company_name' required='') 
+                    
+                    .col-md-4  
+                      .form-group
+                       label(for="") Country
+                       select.form-control(name='country' required)
+                        option(value='') Choose a country
+                        option(value='Afganistan') Afghanistan
+                        option(value='Albania') Albania
+                        option(value='Algeria') Algeria
+                        option(value='American Samoa') American Samoa
+                        option(value='Andorra') Andorra
+                        option(value='Angola') Angola
+                        option(value='Anguilla') Anguilla
+                        option(value='Antigua & Barbuda') Antigua & Barbuda
+                        option(value='Argentina') Argentina
+                        option(value='Armenia') Armenia
+                        option(value='Aruba') Aruba
+                        option(value='Australia') Australia
+                        option(value='Austria') Austria
+                        option(value='Azerbaijan') Azerbaijan
+                        option(value='Bahamas') Bahamas
+                        option(value='Bahrain') Bahrain
+                        option(value='Bangladesh') Bangladesh
+                        option(value='Barbados') Barbados
+                        option(value='Belarus') Belarus
+                        option(value='Belgium') Belgium
+                        option(value='Belize') Belize
+                        option(value='Benin') Benin
+                        option(value='Bermuda') Bermuda
+                        option(value='Bhutan') Bhutan
+                        option(value='Bolivia') Bolivia
+                        option(value='Bonaire') Bonaire
+                        option(value='Bosnia & Herzegovina') Bosnia & Herzegovina
+                        option(value='Botswana') Botswana
+                        option(value='Brazil') Brazil
+                        option(value='British Indian Ocean Ter') British Indian Ocean Ter
+                        option(value='Brunei') Brunei
+                        option(value='Bulgaria') Bulgaria
+                        option(value='Burkina Faso') Burkina Faso
+                        option(value='Burundi') Burundi
+                        option(value='Cambodia') Cambodia
+                        option(value='Cameroon') Cameroon
+                        option(value='Canada') Canada
+                        option(value='Canary Islands') Canary Islands
+                        option(value='Cape Verde') Cape Verde
+                        option(value='Cayman Islands') Cayman Islands
+                        option(value='Central African Republic') Central African Republic
+                        option(value='Chad') Chad
+                        option(value='Channel Islands') Channel Islands
+                        option(value='Chile') Chile
+                        option(value='China') China
+                        option(value='Christmas Island') Christmas Island
+                        option(value='Cocos Island') Cocos Island
+                        option(value='Colombia') Colombia
+                        option(value='Comoros') Comoros
+                        option(value='Congo') Congo
+                        option(value='Cook Islands') Cook Islands
+                        option(value='Costa Rica') Costa Rica
+                        option(value='Cote DIvoire') Cote DIvoire
+                        option(value='Croatia') Croatia
+                        option(value='Cuba') Cuba
+                        option(value='Curaco') Curacao
+                        option(value='Cyprus') Cyprus
+                        option(value='Czech Republic') Czech Republic
+                        option(value='Denmark') Denmark
+                        option(value='Djibouti') Djibouti
+                        option(value='Dominica') Dominica
+                        option(value='Dominican Republic') Dominican Republic
+                        option(value='East Timor') East Timor
+                        option(value='Ecuador') Ecuador
+                        option(value='Egypt') Egypt
+                        option(value='El Salvador') El Salvador
+                        option(value='Equatorial Guinea') Equatorial Guinea
+                        option(value='Eritrea') Eritrea
+                        option(value='Estonia') Estonia
+                        option(value='Ethiopia') Ethiopia
+                        option(value='Falkland Islands') Falkland Islands
+                        option(value='Faroe Islands') Faroe Islands
+                        option(value='Fiji') Fiji
+                        option(value='Finland') Finland
+                        option(value='France') France
+                        option(value='French Guiana') French Guiana
+                        option(value='French Polynesia') French Polynesia
+                        option(value='French Southern Ter') French Southern Ter
+                        option(value='Gabon') Gabon
+                        option(value='Gambia') Gambia
+                        option(value='Georgia') Georgia
+                        option(value='Germany') Germany
+                        option(value='Ghana') Ghana
+                        option(value='Gibraltar') Gibraltar
+                        option(value='Great Britain') Great Britain
+                        option(value='Greece') Greece
+                        option(value='Greenland') Greenland
+                        option(value='Grenada') Grenada
+                        option(value='Guadeloupe') Guadeloupe
+                        option(value='Guam') Guam
+                        option(value='Guatemala') Guatemala
+                        option(value='Guinea') Guinea
+                        option(value='Guyana') Guyana
+                        option(value='Haiti') Haiti
+                        option(value='Hawaii') Hawaii
+                        option(value='Honduras') Honduras
+                        option(value='Hong Kong') Hong Kong
+                        option(value='Hungary') Hungary
+                        option(value='Iceland') Iceland
+                        option(value='Indonesia') Indonesia
+                        option(value='India') India
+                        option(value='Iran') Iran
+                        option(value='Iraq') Iraq
+                        option(value='Ireland') Ireland
+                        option(value='Isle of Man') Isle of Man
+                        option(value='Israel') Israel
+                        option(value='Italy') Italy
+                        option(value='Jamaica') Jamaica
+                        option(value='Japan') Japan
+                        option(value='Jordan') Jordan
+                        option(value='Kazakhstan') Kazakhstan
+                        option(value='Kenya') Kenya
+                        option(value='Kiribati') Kiribati
+                        option(value='Korea North') Korea North
+                        option(value='Korea Sout') Korea South
+                        option(value='Kuwait') Kuwait
+                        option(value='Kyrgyzstan') Kyrgyzstan
+                        option(value='Laos') Laos
+                        option(value='Latvia') Latvia
+                        option(value='Lebanon') Lebanon
+                        option(value='Lesotho') Lesotho
+                        option(value='Liberia') Liberia
+                        option(value='Libya') Libya
+                        option(value='Liechtenstein') Liechtenstein
+                        option(value='Lithuania') Lithuania
+                        option(value='Luxembourg') Luxembourg
+                        option(value='Macau') Macau
+                        option(value='Macedonia') Macedonia
+                        option(value='Madagascar') Madagascar
+                        option(value='Malaysia') Malaysia
+                        option(value='Malawi') Malawi
+                        option(value='Maldives') Maldives
+                        option(value='Mali') Mali
+                        option(value='Malta') Malta
+                        option(value='Marshall Islands') Marshall Islands
+                        option(value='Martinique') Martinique
+                        option(value='Mauritania') Mauritania
+                        option(value='Mauritius') Mauritius
+                        option(value='Mayotte') Mayotte
+                        option(value='Mexico') Mexico
+                        option(value='Midway Islands') Midway Islands
+                        option(value='Moldova') Moldova
+                        option(value='Monaco') Monaco
+                        option(value='Mongolia') Mongolia
+                        option(value='Montserrat') Montserrat
+                        option(value='Morocco') Morocco
+                        option(value='Mozambique') Mozambique
+                        option(value='Myanmar') Myanmar
+                        option(value='Nambia') Nambia
+                        option(value='Nauru') Nauru
+                        option(value='Nepal') Nepal
+                        option(value='Netherland Antilles') Netherland Antilles
+                        option(value='Netherlands') Netherlands (Holland, Europe)
+                        option(value='Nevis') Nevis
+                        option(value='New Caledonia') New Caledonia
+                        option(value='New Zealand') New Zealand
+                        option(value='Nicaragua') Nicaragua
+                        option(value='Niger') Niger
+                        option(value='Nigeria') Nigeria
+                        option(value='Niue') Niue
+                        option(value='Norfolk Island') Norfolk Island
+                        option(value='Norway') Norway
+                        option(value='Oman') Oman
+                        option(value='Pakistan') Pakistan
+                        option(value='Palau Island') Palau Island
+                        option(value='Palestine') Palestine
+                        option(value='Panama') Panama
+                        option(value='Papua New Guinea') Papua New Guinea
+                        option(value='Paraguay') Paraguay
+                        option(value='Peru') Peru
+                        option(value='Phillipines') Philippines
+                        option(value='Pitcairn Island') Pitcairn Island
+                        option(value='Poland') Poland
+                        option(value='Portugal') Portugal
+                        option(value='Puerto Rico') Puerto Rico
+                        option(value='Qatar') Qatar
+                        option(value='Republic of Montenegro') Republic of Montenegro
+                        option(value='Republic of Serbia') Republic of Serbia
+                        option(value='Reunion') Reunion
+                        option(value='Romania') Romania
+                        option(value='Russia') Russia
+                        option(value='Rwanda') Rwanda
+                        option(value='St Barthelemy') St Barthelemy
+                        option(value='St Eustatius') St Eustatius
+                        option(value='St Helena') St Helena
+                        option(value='St Kitts-Nevis') St Kitts-Nevis
+                        option(value='St Lucia') St Lucia
+                        option(value='St Maarten') St Maarten
+                        option(value='St Pierre & Miquelon') St Pierre & Miquelon
+                        option(value='St Vincent & Grenadines') St Vincent & Grenadines
+                        option(value='Saipan') Saipan
+                        option(value='Samoa') Samoa
+                        option(value='Samoa American') Samoa American
+                        option(value='San Marino') San Marino
+                        option(value='Sao Tome & Principe') Sao Tome & Principe
+                        option(value='Saudi Arabia') Saudi Arabia
+                        option(value='Senegal') Senegal
+                        option(value='Seychelles') Seychelles
+                        option(value='Sierra Leone') Sierra Leone
+                        option(value='Singapore') Singapore
+                        option(value='Slovakia') Slovakia
+                        option(value='Slovenia') Slovenia
+                        option(value='Solomon Islands') Solomon Islands
+                        option(value='Somalia') Somalia
+                        option(value='South Africa') South Africa
+                        option(value='Spain') Spain
+                        option(value='Sri Lanka') Sri Lanka
+                        option(value='Sudan') Sudan
+                        option(value='Suriname') Suriname
+                        option(value='Swaziland') Swaziland
+                        option(value='Sweden') Sweden
+                        option(value='Switzerland') Switzerland
+                        option(value='Syria') Syria
+                        option(value='Tahiti') Tahiti
+                        option(value='Taiwan') Taiwan
+                        option(value='Tajikistan') Tajikistan
+                        option(value='Tanzania') Tanzania
+                        option(value='Thailand') Thailand
+                        option(value='Togo') Togo
+                        option(value='Tokelau') Tokelau
+                        option(value='Tonga') Tonga
+                        option(value='Trinidad & Tobago') Trinidad & Tobago
+                        option(value='Tunisia') Tunisia
+                        option(value='Turkey') Turkey
+                        option(value='Turkmenistan') Turkmenistan
+                        option(value='Turks & Caicos Is') Turks & Caicos Is
+                        option(value='Tuvalu') Tuvalu
+                        option(value='Uganda') Uganda
+                        option(value='United Kingdom') United Kingdom
+                        option(value='Ukraine') Ukraine
+                        option(value='United Arab Erimates') United Arab Emirates
+                        option(value='United States of America') United States of America
+                        option(value='Uraguay') Uruguay
+                        option(value='Uzbekistan') Uzbekistan
+                        option(value='Vanuatu') Vanuatu
+                        option(value='Vatican City State') Vatican City State
+                        option(value='Venezuela') Venezuela
+                        option(value='Vietnam') Vietnam
+                        option(value='Virgin Islands (Brit)') Virgin Islands (Brit)
+                        option(value='Virgin Islands (USA)') Virgin Islands (USA)
+                        option(value='Wake Island') Wake Island
+                        option(value='Wallis & Futana Is') Wallis & Futana Is
+                        option(value='Yemen') Yemen
+                        option(value='Zaire') Zaire
+                        option(value='Zambia') Zambia
+                        option(value='Zimbabwe') Zimbabwe    
+                 
+                    
+                    .col-md-4 
+                      .form-group 
+                       br
+                       button.btn.btn-primary.btn-block Save Company
+                       
+            .modal-footer
+              button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+          
+
+
+        
+                 
+  script(src='/accounts/dist-assets/js/plugins/jquery-3.3.1.min.js')
+  script(src='/accounts/dist-assets/js/plugins/bootstrap.bundle.min.js')
+  script(src='/accounts/dist-assets/js/plugins/perfect-scrollbar.min.js')
+  script(src='/accounts/dist-assets/js/scripts/script.min.js')
+  script(src='/accounts/dist-assets/js/scripts/sidebar.large.script.min.js')
+  script(src='/accounts/dist-assets/js/plugins/datatables.min.js')
+  script(src='/accounts/dist-assets/js/scripts/datatables.script.min.js')
+  script(src='/accounts/dist-assets/js/scripts/customizer.script.min.js')
+

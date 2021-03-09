@@ -1,0 +1,60 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Subscription
+    body
+      if vendor_id === true 
+       .row 
+         .col-md-12 
+          if product_id ===false
+           .alert.alert-warning(role='alert')
+             strong.text-capitalize Invalid Product Id 
+          if product_id === true 
+            if product.status === 'Inactive'
+             .alert.alert-warning(role='alert')
+               strong.text-capitalize Current product is inactive, Kindly add subscription plans. 
+            if product.status === 'Active' 
+             .row 
+               each x in product.subscription_plans 
+                
+                 .col-md-3 
+                  .card 
+                    .card-header(style='background-color:blue') 
+                      .card-title(style='text-align:left')
+                        h4(style='color:white') #{x.plan_name}
+                    .card-body(style='background-color:whitesmoke')
+                       ul.list-group 
+                        each y in features 
+                         if y.plan_name === x.plan_name
+                          li.list-group-item 
+                           
+                            | #{y.name}
+                        
+                       div(style='text-align:center;margin-top:20px') 
+                          each z in x.more_details.currencies 
+                            if z.default === false 
+                              span.badge.badge-primary(style='margin:2px;margin-top:5') #{z.currency}
+                            if z.default === true 
+                              h4 #{z.currency} #{z.amount}
+                            
+                          
+                       
+                    .card-footer
+                      button.btn.btn-primary PAY NOW
+           
+      if vendor_id === false 
+        .row 
+         .col-md-12 
+           .alert.alert-warning(role='alert')
+             strong.text-capitalize Invalid Vendor ID
+                               
+      
+       
+    
+
+    script(src="/custom/js/subscription.js") 
+     
+ 

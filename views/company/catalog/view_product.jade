@@ -1,0 +1,393 @@
+doctype html
+html(lang='en' dir='')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1')
+    meta(http-equiv='X-UA-Compatible' content='ie=edge')
+    title View Product | #{product.product_name}
+    link(rel='shortcut icon' href='/auth/assets/img/stisla-fill.svg' type='image/x-icon')
+    link(href='https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900' rel='stylesheet')
+    link(href='/accounts/dist-assets/css/themes/lite-blue.min.css' rel='stylesheet')
+    link(href='/accounts/dist-assets/css/plugins/perfect-scrollbar.min.css' rel='stylesheet')
+    link(rel="stylesheet", href="/accounts/dist-assets/css/plugins/datatables.min.css" )
+  body.text-left
+    .app-admin-wrap.layout-sidebar-large
+      .main-header
+        .logo
+         if user.type === 'Administrator'
+          img(src=user.company_icon style='width:100px' alt='')
+         if user.type ==='Company'
+          img(src=user.company_icon style='width:80px' alt='')
+       
+        .menu-toggle
+          div
+          div
+          div
+        .d-flex.align-items-center
+          
+         
+        div(style='margin: auto')
+        .header-part-right
+          // Full screen toggle
+          i.i-Full-Screen.header-icon.d-none.d-sm-inline-block(data-fullscreen='')
+          
+          
+          .dropdown
+            .user.col.align-self-end
+              
+              img#userDropdown(src='/assets/images/avatar.png' alt='' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              .dropdown-menu.dropdown-menu-right(aria-labelledby='userDropdown')
+                .dropdown-header
+                  i.i-Lock-User.mr-1
+                  | #{user.first_name} #{user.last_name}
+                
+                a.dropdown-item(href='/logout') Sign out
+      .side-content-wrap
+        
+
+        .sidebar-left.open.rtl-ps-none(data-perfect-scrollbar='' data-suppress-scroll-x='true')
+          ul.navigation-left
+            
+            
+            if user.role ==='Administrator' || user.role ==='Finance'
+             li.nav-item
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Financial
+                span.nav-text Transactions  
+              .triangle
+            if user.role ==='Administrator'
+             li.nav-item(data-item='customers')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Business-Mens
+                span.nav-text Customers
+              .triangle
+            if user.role === 'Administrator'
+             li.nav-item(data-item='catalog')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Belt-3
+                span.nav-text Catalog
+              .triangle
+            if user.role === 'Administrator' || user.role ==='Technical'
+             li.nav-item(data-item='checkout')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Checkout
+                span.nav-text Checkout
+              .triangle
+            if user.role === 'Administrator' || user.role ==='Finance'
+             li.nav-item
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Statistic
+                span.nav-text Reports
+              .triangle
+            if user.role === 'Administrator'
+             li.nav-item(data-item='business_accounts')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Dashboard
+                span.nav-text Business Accounts
+              .triangle
+            if user.role ==='Administrator' || user.role ==='Technical'
+             li.nav-item(data-item='developer_tools')
+               a.nav-item-hold(href='#')
+                i.nav-icon.i-Geek
+                span.nav-text Developer Tools
+               .triangle
+            
+        .sidebar-left-secondary.rtl-ps-none(data-perfect-scrollbar='' data-suppress-scroll-x='true')
+            // Customers
+            ul.childNav(data-parent='customers')
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-3
+                  span.item-name Subscribers
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-4
+                  span.item-name Audience
+            // Catalog
+            ul.childNav(data-parent='catalog')
+              li.nav-item
+                a(href='/company/products')
+                  i.nav-icon.i-Plaxo
+                  span.item-name Products
+              li.nav-item
+                a(href='/company/subscription_plans')
+                  i.nav-icon.i-Road-2
+                  span.item-name Subscription Plans
+              
+              li.nav-item
+                a(href='/company/coupons')
+                  i.nav-icon.i-Tag-4
+                  span.item-name Coupons 
+              
+            // Checkout
+            ul.childNav(data-parent='checkout')
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-3
+                  span.item-name Checkout Settings
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-4
+                  span.item-name Sales Tax Settings
+            // Business Accounts
+            ul.childNav(data-parent='business_accounts')
+              li.nav-item
+                a(href='/company/account_settings')
+                  i.nav-icon.i-Data-Settings
+                  span.item-name Account Setting
+              li.nav-item
+                a(href='/company/balance_currency')
+                  i.nav-icon.i-Circular-Point
+                  span.item-name Balance Currency 
+              li.nav-item
+                a(href='/company/team_members')
+                  i.nav-icon.i-Conference
+                  span.item-name Team Members
+            // Developer Tools
+            ul.childNav(data-parent='developer_tools')
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-3
+                  span.item-name Alert & Webhooks
+              li.nav-item
+                a(href='#')
+                  i.nav-icon.i-Clock-4
+                  span.item-name Authentication
+        .sidebar-overlay        
+            
+        
+          
+          
+          
+        
+      // =============== Left side End ================
+      .main-content-wrap.sidenav-open.d-flex.flex-column
+        // ============ Body content start =============
+        .row 
+         .col-md-12
+          != messages('message', locals)
+        .row 
+         .col-md-12 
+            .card 
+                .card-header 
+                      .card-title
+                        h4 
+                         a(href="/company/products").badge.badge-primary
+                           i.i-Left1
+                         &nbsp;
+                         span.text-capitalize #{product.product_name}
+                 .card-body 
+                  .row 
+                   .col-md-4 
+                    .card 
+                     .card-header 
+                      .card-title Info 
+                     .card-body 
+                       .row 
+                        .col-md-12 
+                         img(src=product.product_icon,style="width:100%", alt="")
+                         hr
+                         i Product Name: #{product.product_name} 
+                         br
+                         br
+                         i Checkout Message Custom: #{product.checkout_custom_message} 
+                         br
+                         br
+                         i Product Description: #{product.product_description}
+                         br
+                         br
+                         i Product Link: 
+                          a(href=product.product_link target="_blank") #{product.product_link}
+                         br
+                         if product.status === 'Inactive'
+                            span.badge.badge-danger Inactive
+                         if product.status === 'Active'
+                            span.badge.badge-success Active
+                   .col-md-4 
+                      .card 
+                       .card-header 
+                        .card-title 
+                         h4 Subscription plans
+                       .card-body 
+                        if product.subscription_plans.length <1
+                          div(style='text-align:center')
+                           .alert.alert-danger(role='alert')
+                            strong.text-capitalize You have no subscription plans for this product.
+                          hr
+                        if subscriptions.length > 0
+                         .row 
+                          .col-md-12 
+                           form.form(action="/company/select_subscription_plan/#{product._id}",method="POST")
+                             .form-group  
+                               label(for="") Subscription Plans -  Choose from Ascending Order
+                               select.form-control(type="text" name='plan_name' required)
+                                option(value="") Choose one option  
+                                each x in subscriptions 
+                                 option(value=x.plan_name) #{x.plan_name} 
+                             .form-group 
+                                 button.btn.btn-primary Save
+                       
+                         .row 
+                            .col-md-12
+                             ul.list-group 
+                               each x in product.subscription_plans 
+                                 li.list-group-item 
+                                      p #{x.no}. #{x.plan_name} 
+                                        
+                                        a(href="/company/delete_plan/#{product._id}/#{x.no}" style='float:right')
+                                         i.i-Close-Window(style='color:red') 
+                                         
+                                        a(href="#" style="float:right;margin-right:5px" data-toggle='modal' data-whatever=product._id+"#"+x.no data-target='#add_new_feature')
+                                         i.i-Add
+                                        &nbsp; 
+                                        &nbsp;
+                                      
+                                      if features.length < 1
+                                       div(style='text-align:center')
+                                        i No features found.
+                                      if features.length > 0
+                                       div(style='display:inline-block') 
+                                        each y in features 
+                                         if y.plan_name === x.plan_name
+                                            span.badge.badge-dark(style='font-size:1.0em;margin:4px') #{y.name}
+                                             &nbsp;
+                                             a(href="/company/delete_feature/#{product._id}/#{y._id}" style='float:right') 
+                                                i.i-Close-Window(style='color:white')
+                                        
+                        if subscriptions.length < 1
+                         .row 
+                          .col-md-12 
+                            div(style='text-align:center')
+                             .alert.alert-warning(role='alert')
+                              strong.text-capitalize No subscription plans found. Please add one |
+                               &nbsp;
+                               a(href="/company/subscription_plans") Add subscription plan
+                            
+                           
+
+                           
+                          
+                   .col-md-4
+        .row(style='margin-top:20px;margin-bottom:100px')
+          input#vendor_id(type='hidden' value=user.vendor_id)
+          input#product_id(type='hidden' value=product.product_id)
+          .col-md-12  
+           .card 
+             .card-header 
+                .card-title Subscription Plans Preview  
+             .card-body
+              .row 
+                .col-md-9(style='overflow-x:scroll')
+                  #subscription_plans         
+                .col-md-3(style="overflow-y:scroll;height:550px")
+                  .row 
+                   .col-md-12 
+                    .card 
+                     .card-header
+                      .card-title
+                        h4 EDIT STYLE
+                     .card-body 
+                      form.form(action='/company/edit_subscription_settings',method="POST")
+                       
+                       .form-group
+                        label(for="")  Header Background Color: 
+                        input.form-control(type="color",name='header_background_color' value='#f6b73c' required)
+                       .form-group
+                        label(for="")  Header Text Color:
+                        input.form-control(type="color",name='header_text_color' required)
+                       .form-group
+                         label(for="")  Header Text Alignment:
+                         select.form-control(name="header_text_align") 
+                          option(value='left') Left
+                          option(value="center") Center 
+                          option(value='right') Right  
+                       hr 
+                       .form-group
+                        label(for="")  Body Background Color: 
+                        input.form-control(type="color",name='body_background_color' value='#f6b73c' required)
+                       hr
+                       .form-group
+                        label(for="")  List Background Color:
+                        input.form-control(type="color",name='list_background_color' required)
+                       .form-group
+                        label(for="")  List Text Color:
+                        input.form-control(type="color",name='list_text_color' required)
+                       .form-group
+                         label(for="")  List Text Alignment:
+                         select.form-control(name="list_text_align",required) 
+                          option(value='left') Left
+                          option(value="center") Center 
+                          option(value='right') Right  
+                       hr
+                       .form-group
+                        label(for="")  Price Text Color:
+                        input.form-control(type="color",name='price_text_color' required)
+                       hr
+                       .form-group
+                        label(for="")  Footer Background Color:
+                        input.form-control(type="color",name='footer_text_color' required)
+                       .form-group
+                        label(for="")  Button Background Color:
+                        input.form-control(type="color",name='button_background_color' required)
+                       .form-group
+                        label(for="")  Button Text Color:
+                        input.form-control(type="color",name='button_text_color' required)
+                       .form-group
+                         label(for="")  Button Alignment:
+                         select.form-control(name="button_alignment",required) 
+                          option(value='left') Left
+                          option(value="center") Center 
+                          option(value='right') Right 
+                       hr
+                       .form-group 
+                        button.btn.btn-primary Save
+
+                       
+
+                           
+
+                           
+                        
+
+  .modal.fade#add_new_feature(tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              h5#exampleModalCenterTitle.modal-title Add new feature
+              button.close(type='button' data-dismiss='modal' aria-label='Close')
+                span(aria-hidden='true') ×
+            .modal-body     
+              .row 
+               .col-md-12 
+                form.form(action="/company/add_new_feature/#{product._id}",method='POST')
+                  input#no(type='hidden' name='no')
+                  .form-group 
+                   label(for="add_feature") Add Feature
+                   input.form-control(type="text" name='feature' required) 
+                   
+                  .form-group 
+                   button.btn.btn-primary Save
+                   
+
+                  
+                 
+  script(src='/accounts/dist-assets/js/plugins/jquery-3.3.1.min.js')
+  script(src='/accounts/dist-assets/js/plugins/bootstrap.bundle.min.js')
+  script(src='/accounts/dist-assets/js/plugins/perfect-scrollbar.min.js')
+  script(src='/accounts/dist-assets/js/scripts/script.min.js')
+  script(src='/accounts/dist-assets/js/scripts/sidebar.large.script.min.js')
+  script(src='/accounts/dist-assets/js/plugins/datatables.min.js')
+  script(src='/accounts/dist-assets/js/scripts/datatables.script.min.js')
+  script(src='/accounts/dist-assets/js/scripts/customizer.script.min.js')
+  script(src="/libraries/modal.js")
+  script(src="http://localhost:8000/custom/js/subscription.min.js")
+  script. 
+      function subscription_plans()
+      {
+        const options = {
+          vendor_id:document.getElementById("vendor_id").value,
+          product_id:document.getElementById("product_id").value,
+          
+        }
+        return options
+      } 
