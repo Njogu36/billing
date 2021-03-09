@@ -6,7 +6,7 @@ $(function(){
         let vendor_id = options.vendor_id
        
         console.log(document.cookie)
-        $("#subscription_plans").load("/custom/"+product_id+"/"+vendor_id); 
+        $("#subscription_plans").load("http://192.248.35.44/custom/"+product_id+"/"+vendor_id); 
          
      } )    
 });

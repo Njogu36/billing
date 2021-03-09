@@ -143,7 +143,7 @@ router.post("/add_new_coupon",CHECK_USER,ADD_NEW_COUPON.add_new_coupon)
 const ACCOUNT_SETTINGS_PAGE = require('../company_functions/business_account/account_settings/account_settings_page')
 const UPDATE_COMPANY_PROFILE = require('../company_functions/business_account/account_settings/update_company_profile')
 const UPDATE_COMPANY_LOGO = require('../company_functions/business_account/account_settings/update_company_logo')
-const EMAIL_CONFIGURATION_POST  = require('../company_functions/business_account/account_settings/email_configuration_post')
+const EMAIL_CONFIGURATION_POST  = require('../company_functions/business_account/account_settings/email_configuration_Post')
 const TEST_EMAIL_POST = require('../company_functions/business_account/account_settings/test_email_post')
 
 router.get('/account_settings',CHECK_USER,ACCOUNT_SETTINGS_PAGE.account_settings_page)

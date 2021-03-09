@@ -1,10 +1,12 @@
 const mongojs = require("mongojs");
+
 const email_configuration_post = (req, res) => {
   const { email, host, password } = req.body;
   console.log(req.body)
   const db_name = req.user.db_name;
   const db = mongojs("mongodb://localhost/" + db_name);
   const Email = db.collection("emails");
+  
   Email.findOne({}, (err, email_) => {
       console.log(email)
     if (email_) {
