@@ -7,8 +7,9 @@ const subscriptionPlanSchema = mongoose.Schema({
   every:Number,
   period:String,
   trial_period:Number,
-  quantity:Boolean,
+  quantity:Number,
   currencies:[],
+  type:String,
   created_on:Date,
   coupon_id:String,
 })

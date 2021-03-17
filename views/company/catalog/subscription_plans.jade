@@ -15,6 +15,10 @@ html(lang='en' dir='')
      {
        display:none
      }
+     #limited 
+     {
+       display:none
+     }
   body.text-left
     .app-admin-wrap.layout-sidebar-large
       .main-header
@@ -56,7 +60,7 @@ html(lang='en' dir='')
             
             if user.role ==='Administrator' || user.role ==='Finance'
              li.nav-item
-              a.nav-item-hold(href='#')
+              a.nav-item-hold(href='/company/transactions')
                 i.nav-icon.i-Financial
                 span.nav-text Transactions  
               .triangle
@@ -72,12 +76,7 @@ html(lang='en' dir='')
                 i.nav-icon.i-Belt-3
                 span.nav-text Catalog
               .triangle
-            if user.role === 'Administrator' || user.role ==='Technical'
-             li.nav-item(data-item='checkout')
-              a.nav-item-hold(href='#')
-                i.nav-icon.i-Checkout
-                span.nav-text Checkout
-              .triangle
+            
             if user.role === 'Administrator' || user.role ==='Finance'
              li.nav-item
               a.nav-item-hold(href='#')
@@ -101,13 +100,10 @@ html(lang='en' dir='')
             // Customers
             ul.childNav(data-parent='customers')
               li.nav-item
-                a(href='#')
+                a(href='/company/subscribers')
                   i.nav-icon.i-Clock-3
                   span.item-name Subscribers
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-4
-                  span.item-name Audience
+              
             // Catalog
             ul.childNav(data-parent='catalog')
               li.nav-item
@@ -124,16 +120,7 @@ html(lang='en' dir='')
                   i.nav-icon.i-Tag-4
                   span.item-name Coupons 
               
-            // Checkout
-            ul.childNav(data-parent='checkout')
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-3
-                  span.item-name Checkout Settings
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-4
-                  span.item-name Sales Tax Settings
+            
             // Business Accounts
             ul.childNav(data-parent='business_accounts')
               li.nav-item
@@ -151,13 +138,9 @@ html(lang='en' dir='')
             // Developer Tools
             ul.childNav(data-parent='developer_tools')
               li.nav-item
-                a(href='#')
+                a(href='/company/alerts_webhooks')
                   i.nav-icon.i-Clock-3
                   span.item-name Alert & Webhooks
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-4
-                  span.item-name Authentication
         .sidebar-overlay        
             
         
@@ -179,7 +162,7 @@ html(lang='en' dir='')
                         h4 Subscription Plans
                          button.btn.btn-primary(style='float:right' data-toggle='modal' data-target='#add_subscription') Add subscription plan
                 .card-body 
-                  table#deafult_ordering_table.display.table.table-striped.table-bordered(style='width:100%')
+                  table.table#pdfmake
                       thead
                         tr
                           th
@@ -214,7 +197,7 @@ html(lang='en' dir='')
                             | #{x.trial_period} 
                            if x.trial_period === ""
                             | ....
-                          td 1
+                          td #{x.quantity}
                           td #{currency.name}
                           td 
                             each y in x.currencies 
@@ -265,7 +248,7 @@ html(lang='en' dir='')
                  .row 
                   .col-md-12 
                    .form-group 
-                    label(for="") Price ( Currency: USD)
+                    label(for="") Price ( Currency: USD )
                     input.form-control#default_currency(type='hidden' value=currency.name name='default_currency')
                     input.form-control#price(type="number", name='price' required,min=1) 
                    .form-group
@@ -292,7 +275,7 @@ html(lang='en' dir='')
                         input.form-control(type="text" value=x.name name='price_currency' readonly )
                  hr
                  .row 
-                   .col-md-4
+                   .col-md-3
                     .form-group
                       label(for="billing_interval") Billing Interval 
                       select.form-control#billing_interval(name="billing_interval" required)
@@ -304,7 +287,7 @@ html(lang='en' dir='')
                         option(value="Yearly") Yearly  
                         option(value="Custom") Custom
                    #custom 
-                    .col-md-4 
+                    .col-md-3 
                      .row 
                       .col-md-3(style='margin-right:5px')
                         .form-group
@@ -319,17 +302,24 @@ html(lang='en' dir='')
                             option(value="Weeks") Weeks 
                             option(value="Months") Months 
                             option(value="Years") Years   
-                   .col-md-4
+                   .col-md-3
                      .form-group
                           label(for="trial_period") Trial Period ( Optional )
                           input.form-control(type="number",name='trial_period', min=1,placeholder="Days" )
-                   .col-md-4
+                   .col-md-3
                         .form-group
-                          br
-                          label.checkbox.checkbox-dark
-                            input(type='checkbox' name="quantity")
-                            span Enable Quantity ( Optional )
-                            span.checkmark
+                          label(for="type") Type 
+                          select.form-control#type(name="type" required)
+                           option(value='') Choose one option 
+                           option(value='Limited') Limited 
+                           option(value='Unlimited') Unlimited  
+                 #limited 
+                    .row
+                     .col-md-3 
+                        .form-group 
+                          label(for='quantity') Enter Quantity
+                          input.form-control(type="number" name='quantity' min=1)
+
                  hr
                  .row 
                   .col-md-12 
@@ -351,6 +341,9 @@ html(lang='en' dir='')
   script(src='/accounts/dist-assets/js/scripts/customizer.script.min.js') 
   script(src="/libraries/get_currency.js" type='text/javascript')     
   script(src="/libraries/billing_interval.js" type='text/javascript') 
+  script(src="/libraries/type.js" type='text/javascript') 
+
+  
       
       
       

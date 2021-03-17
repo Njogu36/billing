@@ -12,8 +12,8 @@ const add_subscription_plan = (req, res) => {
     period,
     trial_period,
     quantity,
-    price,
     currency,
+    type,
     price_currency,
     default_currency,
   } = req.body;
@@ -115,11 +115,17 @@ const add_subscription_plan = (req, res) => {
        }
       
         data.trial_period = trial_period;
-       
-       
+        data.type = type
+        if(data.type ==='Limited')
+        {
+          data.quantity = quantity
+        }
+        else if(data.type==='Unlimited')
+        {
+          data.quantity = 0
+        }
+        
       
-       data.enabled_quantity = quantity
-       data.quantity = 1
        data.currencies = array
        data.created_on = new Date()
        Subscription.save(data,()=>{

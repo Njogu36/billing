@@ -35,4 +35,11 @@ router.get('/check_user_type',CHECK_USER,CHECK_USER_TYPE.check_user_type)
 // LOGOUT
 router.get('/logout',CHECK_USER,LOG_OUT.logOut)
 
+// TESTS
+router.post("/hooks",(req,res)=>{
+    console.log("...... SUCCESS .....")
+    console.log(req.body) 
+    console.log("...... SUCCESS .....")
+})
+
 module.exports = router;

@@ -171,7 +171,154 @@ html(lang='en' dir='')
                 .card-body 
 
         
-                 
+  .modal.fade#payNow(tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+        .modal-dialog.modal-lg
+          .modal-content
+            .modal-header
+              h5#exampleModalCenterTitle.modal-title Order Summary & Checkout
+              button.close(type='button' data-dismiss='modal' aria-label='Close')
+                span(aria-hidden='true') ×
+            .modal-body 
+             #exceed 
+              div(style='text-align:center')
+               img(src="https://i.pinimg.com/originals/5d/7e/39/5d7e39c0398db798ae95728dc0a2d12c.png",style='width:100px;margin-bottom:20px', alt="") 
+               
+               p  Please Upgrade Your Plan.
+             #notexceed
+              #failed
+                p FAILED
+              #success 
+               p SUCCESS
+              #order  
+               .row  
+                .col-md-12 
+                  .card 
+                    .card-header 
+                      .card-title 
+                       h4 Order Summary 
+                    .card-body
+                      table.table 
+                        thead  
+                          tr 
+                      
+                            th Quantity 
+                            th Unit
+                            th Currency
+                            th Price
+                            th Total
+                        tbody 
+                           tr 
+                         
+                            td
+                              | #{quantity}
+                              input.form-control#quantity(type='hidden',style='width:100px' value=quantity) 
+                            td#priceUnit
+                            td
+                              select.form-control#currency(name="" style='width:100px') 
+                                #option
+                            td#price
+                            td#total
+               .row(style='margin-top:20px')
+                  .col-md-12
+                   .card 
+                    .card-header 
+                      .card-title 
+                       h4 Coupon ( Optional )
+                    .card-body 
+                      .form-group 
+                       
+                       label(for="Coupon") Coupon Code 
+                       input.form-control#coupon_code(type="text" name='coupon')
+                       div(style='margin-top:4px')
+                        span#success_message(style='color:green')
+                        span#error_message(style='color:red')
+               form#FORM
+                .row
+                 .col-md-12
+                      input#quantity_(type="hidden" name='quantity' value=quantity )
+                      input#price_(type="hidden" name="price")
+                      input#currency_(type="hidden" name="currency")
+                      input#total_(type='hidden' value=total name='total')
+                      input#userID(type='hidden' value=userID)
+                      input#vendorID(type="hidden" value=vendorID)
+                      input#productID(type="hidden" value=productID)
+                      input#coupons(type='hidden' value=coupons)
+                      
+                   
+                
+                       
+                      
+                .row(style='margin-top:20px')
+                 .col-md-12
+                  .card 
+                    .card-header 
+                      .card-title 
+                       h4 Billing Details
+                    .card-body
+                    
+                      .form-group
+                        .row 
+                         .col-md-4
+                           label(for="") First name 
+                           input.form-control#first_name(type="text" required)
+                         .col-md-4
+                           label(for="") Middle name 
+                           input.form-control#middle_name(type="text" )
+                         .col-md-4
+                           label(for="") Last name 
+                           input.form-control#last_name(type="text"  required)
+                        
+                      
+                
+                     
+                .row(style='margin-top:20px')
+                 .col-md-12
+                  .card 
+                    .card-header 
+                      .card-title 
+                       h4 Payment Options
+                    .card-body
+                      .row 
+                       .col-md-12 
+                         .form-group 
+                          label.radio.radio-outline-success
+                            input(type='radio' name='radio' value="MPESA" class='payment_option' checked)
+                            &nbsp;
+                            span MPESA
+                            span.checkmark
+                          &nbsp;
+                          label.radio.radio-outline-success
+                            input(type='radio' name='radio' value="AIRTEL MONEY"  class='payment_option')
+                            &nbsp;
+                            span AIRTEL MONEY
+                            span.checkmark
+                          &nbsp;
+                          label.radio.radio-outline-success
+                            input(type='radio' name='radio' value="VISA/MASTERCARD"  class='payment_option')
+                            &nbsp;
+                            span VISA / MASTERCARD
+                            span.checkmark
+                      .row 
+                        .col-md-12#MPESA 
+                          .form-group 
+                            label(for="") MPESA Mobile Number 
+                            input.form-control#mpesa_number(type="tel" name='mpesa_number') 
+                        .col-md-12#AIRTEL 
+                          .form-group 
+                            label(for="") AIRTEL Mobile Number 
+                            input.form-control#airtel_number(type="tel" name='airtel_number') 
+                        .col-md-12#VISA
+                         .form-group
+                          input.form-control#credit_number(name="credit-number" class="cc-number" type="tel" pattern="\d*" maxlength="19" placeholder="Card Number")
+                         .form-group
+                          input.form-control#credit_expires(name="credit-expires" class="cc-expires" type="tel" pattern="\d*" maxlength="7" placeholder="MM / YY")
+                         .form-group
+                          input.form-control#credit_cvc(name="credit-cvc" class="cc-cvc" type="tel" pattern="\d*" maxlength="4" placeholder="CVC")
+
+                      
+                .row(style='margin-top:20px')
+                 .col-md-12 
+                   button.btn.btn-primary.btn-block#main_button PAY NOW                
   script(src='/accounts/dist-assets/js/plugins/jquery-3.3.1.min.js')
   script(src='/accounts/dist-assets/js/plugins/bootstrap.bundle.min.js')
   script(src='/accounts/dist-assets/js/plugins/perfect-scrollbar.min.js')

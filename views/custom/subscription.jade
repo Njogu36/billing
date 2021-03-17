@@ -5,6 +5,96 @@ html(lang="en")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Subscription
+        link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous")
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css' integrity='sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==' crossorigin='anonymous')
+        style. 
+          .modal-dialog {
+            width: 100%;
+            height: 100%;
+            
+          }
+          #MPESA 
+          {
+            display:block
+          }
+          #AIRTEL 
+          {
+            display:none
+          }
+          #VISA 
+          {
+            display:none
+          }
+          #failed 
+          {
+            display:none
+          }
+          #success
+          {
+            display:none
+          }
+          #main_button 
+          {
+            background-color:#454ade;
+            border-color:blue;
+            border-radius:0;
+            font-weight:bold;
+            padding-vertical:20px
+          }
+          .card 
+          {
+            border-radius:4;
+            font-weight:300;
+           
+          }
+          .card-body 
+          {
+            background-color:white
+          }
+          .card-footer 
+          {
+            background-color:white
+          }
+          h4
+          {
+            text-align:center;
+            font-weight:bold;
+            color:white
+          }
+          .card-header 
+          {
+            background-color:#1b1f3b;
+            border-color:#1b1f3b
+
+          }
+          .form-control 
+          {
+            border-radius:0
+          }
+          .modal 
+          {
+            border-radius:0
+          }
+          #notexceed
+          {
+            display:none
+          }
+          #exceed 
+          {
+            display:none
+          }
+          #checkout 
+          {
+            display:none
+          }
+          
+        
+          
+
+          
+          
+
+          
     body
       if vendor_id === true 
        .row 
@@ -13,16 +103,18 @@ html(lang="en")
            .alert.alert-warning(role='alert')
              strong.text-capitalize Invalid Product Id 
           if product_id === true 
+          
             if product.status === 'Inactive'
              .alert.alert-warning(role='alert')
                strong.text-capitalize Current product is inactive, Kindly add subscription plans. 
             if product.status === 'Active' 
-             .row 
-               each x in product.subscription_plans 
-                
-                 .col-md-3 
+             .row(style='margin:20px')
+              
+              each x in product.subscription_plans
+               if !subscriber
+                 .col-md-3(style='margin:10px') 
                   .card 
-                    .card-header(style='background-color:blue') 
+                    .card-header(style='background-color:#153e90') 
                       .card-title(style='text-align:left')
                         h4(style='color:white') #{x.plan_name}
                     .card-body(style='background-color:whitesmoke')
@@ -30,20 +122,80 @@ html(lang="en")
                         each y in features 
                          if y.plan_name === x.plan_name
                           li.list-group-item 
-                           
+                            i.fa.fa-check(style='color:green')
+                            &nbsp;
                             | #{y.name}
+                             
                         
                        div(style='text-align:center;margin-top:20px') 
                           each z in x.more_details.currencies 
                             if z.default === false 
                               span.badge.badge-primary(style='margin:2px;margin-top:5') #{z.currency}
                             if z.default === true 
-                              h4 #{z.currency} #{z.amount}
+                              h3 #{z.currency} #{z.amount}
                             
                           
                        
                     .card-footer
-                      button.btn.btn-primary PAY NOW
+
+                      button.btn.btn-primary.btn-block#main_button(data-toggle="modal" data-target='#payNow' data-whatever=x.more_details data-backdrop="static" style='background-color:#0e49b5' ) SELECT
+           
+                
+               if subscriber
+                if x.plan_name === subscriber.subscription_plan.plan_name
+                 .col-md-3(style='margin:10px;') 
+                  .card
+                    .card-header(style='background-color:#413c69') 
+                      .card-title(style='text-align:left')
+                        h4(style='color:white') #{x.plan_name}
+                    .card-body(style='background-color:whitesmoke')
+                       ul.list-group 
+                        each y in features 
+                         if y.plan_name === x.plan_name
+                          li.list-group-item 
+                            i.fa.fa-check(style='color:green')
+                            &nbsp;
+                            | #{y.name}
+                             
+                        
+                       div(style='text-align:center;margin-top:20px') 
+                          each z in x.more_details.currencies 
+                            if z.default === false 
+                              span.badge.badge-primary(style='margin:2px;margin-top:5') #{z.currency}
+                            if z.default === true 
+                              h3 #{z.currency} #{z.amount}
+                    .card-footer
+                    
+                      button.btn.btn-primary.btn-block#main_button(data-toggle="modal" data-target='#payNow' data-whatever=x.more_details data-backdrop="static"  style='background-color:#4a47a3') SELECT
+                    
+                if x.plan_name !== subscriber.subscription_plan.plan_name
+                 .col-md-3(style='margin:10px') 
+                  .card 
+                    .card-header(style='background-color:#153e90') 
+                      .card-title(style='text-align:left')
+                        h4(style='color:white') #{x.plan_name}
+                    .card-body(style='background-color:whitesmoke')
+                       ul.list-group 
+                        each y in features 
+                         if y.plan_name === x.plan_name
+                          li.list-group-item 
+                            i.fa.fa-check(style='color:green')
+                            &nbsp;
+                            | #{y.name}
+                             
+                        
+                       div(style='text-align:center;margin-top:20px') 
+                          each z in x.more_details.currencies 
+                            if z.default === false 
+                              span.badge.badge-primary(style='margin:2px;margin-top:5') #{z.currency}
+                            if z.default === true 
+                              h3 #{z.currency} #{z.amount}
+                            
+                          
+                       
+                    .card-footer
+
+                      button.btn.btn-primary.btn-block#main_button(data-toggle="modal" data-target='#payNow' data-whatever=x.more_details data-backdrop="static" style='background-color:#0e49b5' ) SELECT
            
       if vendor_id === false 
         .row 
@@ -52,9 +204,410 @@ html(lang="en")
              strong.text-capitalize Invalid Vendor ID
                                
       
-       
-    
+    .modal.fade#payNow(tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+        .modal-dialog.modal-lg
+          .modal-content
+            .modal-header
+              h5#exampleModalCenterTitle.modal-title Order Summary & Checkout
+              button.close(type='button' data-dismiss='modal' aria-label='Close')
+                span(aria-hidden='true') ×
+            .modal-body
+              div 
+                      input#quantity_(type="hidden" name='quantity' value=quantity )
+                      input#price_(type="hidden" name="price")
+                      input#currency_(type="hidden" name="currency")
+                      input#total_(type='hidden' value=total name='total')
+                      input#userID(type='hidden' value=userID)
+                      input#vendorID(type="hidden" value=vendorID)
+                      input#productID(type="hidden" value=productID)
+                      input#coupons(type='hidden' value=coupons)
+             #exceed 
+              div(style='text-align:center')
+               img(src="https://i.pinimg.com/originals/5d/7e/39/5d7e39c0398db798ae95728dc0a2d12c.png",style='width:100px;margin-bottom:20px', alt="") 
+               
+               p  Please Upgrade Your Plan.
+             #notexceed
+              #failed
+                p FAILED
+              #success(style='text-align:center')
+               img(src="https://sellcodes.com/assets/images/Purchase_Success.png",style='width:100px;margin-bottom:20px', alt="")
+               
+               p Payment Successfully.
+              #order(style='margin:-20px 20px 20px 20px')  
+               .row  
+                .col-md-12 
+                  .card 
+                    .card-header 
+                      .card-title(style='color:white') Order Summary 
+                    .card-body
+                      table.table 
+                        thead  
+                          tr 
+                      
+                            th Quantity 
+                            th Unit
+                            th Currency
+                            th Price
+                            th Total
+                        tbody 
+                           tr 
+                         
+                            td
+                              | #{quantity}
+                              input.form-control#quantity(type='hidden',style='width:100px' value=quantity) 
+                            td#priceUnit
+                            td
+                              select.form-control#currency(name="" style='width:100px') 
+                                #option
+                            td#price
+                            td#total
+               .row(style='margin-top:20px')
+                  .col-md-12
+                   .card 
+                    .card-header 
+                      .card-title(style='color:white') Coupon ( Optional )
+                    .card-body 
+                      .form-group 
+                       
+                       label(for="Coupon") Coupon Code 
+                       input.form-control#coupon_code(type="text" name='coupon')
+                       div(style='margin-top:4px')
+                        span#success_message(style='color:green')
+                        span#error_message(style='color:red')
 
-    script(src="/custom/js/subscription.js") 
+                .row(style='margin-top:20px')
+                 .col-md-12 
+                   button.btn.btn-primary.btn-block#main_button(onclick="document.getElementById('order').style.display='none'; document.getElementById('checkout').style.display='block'; ") PROCEED TO PAYMENT    
+              #checkout(style='margin:-20px 20px 20px 20px') 
+                .row 
+                  .col-md-12  
+                    button.btn.btn-dark(href="" onclick="document.getElementById('order').style.display='block'; document.getElementById('checkout').style.display='none'; ")
+                      i.fa.fa-arrow-left 
+                form#FORM  
+                 .row(style='margin-top:20px')
+                  .col-md-12
+                   .card 
+                    .card-header 
+                      .card-title(style='color:white') Billing Details
+                    .card-body
+                    
+                      .form-group
+                        .row 
+                         .col-md-4
+                           label(for="") First name 
+                           input.form-control#first_name(type="text" required)
+                         .col-md-4
+                           label(for="") Middle name 
+                           input.form-control#middle_name(type="text" )
+                         .col-md-4
+                           label(for="") Last name 
+                           input.form-control#last_name(type="text"  required)
+                        
+                      
+                
+                     
+                 .row(style='margin-top:20px')
+                  .col-md-12
+                   .card 
+                    .card-header 
+                      .card-title(style='color:white') Payment Options
+                    .card-body
+                      .row 
+                       .col-md-12 
+                         .form-group 
+                          label.radio.radio-outline-success
+                            input(type='radio' name='radio' value="MPESA" class='payment_option' checked)
+                            &nbsp;
+                            span MPESA
+                            span.checkmark
+                          &nbsp;
+                          label.radio.radio-outline-success
+                            input(type='radio' name='radio' value="AIRTEL MONEY"  class='payment_option')
+                            &nbsp;
+                            span AIRTEL MONEY
+                            span.checkmark
+                          &nbsp;
+                          label.radio.radio-outline-success
+                            input(type='radio' name='radio' value="VISA/MASTERCARD"  class='payment_option')
+                            &nbsp;
+                            span VISA / MASTERCARD
+                            span.checkmark
+                      .row 
+                        .col-md-12#MPESA 
+                          .form-group 
+                            label(for="") MPESA Mobile Number 
+                            input.form-control#mpesa_number(type="tel" name='mpesa_number') 
+                        .col-md-12#AIRTEL 
+                          .form-group 
+                            label(for="") AIRTEL Mobile Number 
+                            input.form-control#airtel_number(type="tel" name='airtel_number') 
+                        .col-md-12#VISA
+                         .form-group
+                          input.form-control#credit_number(name="credit-number" class="cc-number" type="tel" pattern="\d*" maxlength="19" placeholder="Card Number")
+                         .form-group
+                          input.form-control#credit_expires(name="credit-expires" class="cc-expires" type="tel" pattern="\d*" maxlength="7" placeholder="MM / YY")
+                         .form-group
+                          input.form-control#credit_cvc(name="credit-cvc" class="cc-cvc" type="tel" pattern="\d*" maxlength="4" placeholder="CVC")
+
+                      
+                 .row(style='margin-top:20px')
+                  .col-md-12 
+                   button.btn.btn-primary.btn-block#main_button PAY NOW 
+    
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js", integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV", crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js", integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf", crossorigin="anonymous")
+    script(src="/custom/js/subscription.js")
+    script(type='text/javascript'). 
+      $( document ).ready(function() {
+          function formatDollar(num) {
+              var p = num.toFixed(2).split(".");
+              return p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+                  return  num=="-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
+              }, "") + "." + p[1];
+          }
+
+         
+
+          $('#payNow').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) 
+            var recipient = button.data('whatever') 
+            document.getElementById("success").style.display = "none"
+            document.getElementById("order").style.display = "block"
+            let plan = recipient
+            let quantity = document.getElementById('quantity').value;
+            if(plan.type==='Limited')
+            {
+                 if(parseInt(quantity)<=parseInt(plan.quantity))
+                 {
+                     run()
+                 }
+                 else if(parseInt(quantity)>=parseInt(plan.quantity))
+                 {
+                     document.getElementById('notexceed').style.display = 'none'
+                     document.getElementById('exceed').style.display = 'block'
+                 }
+            }
+            else if(plan.type==='Unlimited')
+            {
+             run()
+            } 
+
+            function run(){ 
+              document.getElementById('notexceed').style.display = 'block'
+                document.getElementById('exceed').style.display = 'none'
+                
+            setTimeout(()=>{
+              var modal = $(this)
+              
+             
+              let priceFilter = recipient.currencies.filter((x)=>{
+                return x.default === true
+              })
+              let amount = parseInt(priceFilter[0].amount.replace(/\,/g,''))
+              let sum = amount * parseInt(document.getElementById("quantity").value)
+
+              document.getElementById("price").innerHTML = formatDollar(sum)
+              document.getElementById("price_").value = formatDollar(sum)
+              document.getElementById("total").innerHTML = formatDollar(sum)
+              document.getElementById("total_").value = formatDollar(sum)
+              document.getElementById("currency_").value = priceFilter[0].currency
+              document.getElementById("priceUnit").innerHTML = formatDollar(parseInt(amount))
+              
+              
+             
+              $('#currency').empty().append(`<option value="${priceFilter[0].currency}">${priceFilter[0].currency}</option>`)
+
+              let priceFilterFalse = recipient.currencies.filter((x)=>{
+                return x.default === false
+              })
+              if(priceFilterFalse.length>0)
+              {
+                  priceFilterFalse.map((item)=>{
+                    $('#currency').append(`<option value="${item.currency}">${item.currency}</option>`)
+                  })
+              }
+              
+              
+            
+             },2000)
+
+             // CURRENCY CHANGE
+            }
+            $("#currency").change((e)=>{
+              let val = e.target.value 
+              let filterCurrency = recipient.currencies.filter((item)=>{
+                return item.currency === val
+              })
+              setTimeout(()=>{
+              var amount = parseInt(filterCurrency[0].amount.replace(/\,/g,'')); 
+              var sum = parseInt(document.getElementById("quantity").value) * parseInt(amount)
+              document.getElementById("currency_").value = filterCurrency[0].currency
+              document.getElementById("priceUnit").innerHTML = formatDollar(parseInt(amount))
+
+              document.getElementById("total").innerHTML = formatDollar(sum)
+              document.getElementById("total_").value = formatDollar(sum)
+              document.getElementById("price_").value = sum
+              document.getElementById("price").innerHTML =  formatDollar(parseInt(sum)) 
+              },500)
+            })
+            // COUPON CODE
+           $('#coupon_code').change(function(e){
+            let coupons = JSON.parse(document.getElementById("coupons").value);
+            let code = e.target.value 
+            if(code === '')
+            {
+              document.getElementById("total").innerHTML = document.getElementById('price_').value
+              document.getElementById("total_").innerHTML = document.getElementById('price_').value
+              document.getElementById('success_message').innerHTML = ''
+              document.getElementById('error_message').innerHTML = 'Please enter a coupon code'
+            }
+            else if(code !=='')
+            {
+            let get_coupon =  coupons.filter((x)=>{
+              return x.code === code
+            })
+            if(get_coupon.length > 0)
+            {
+             let discount_type = get_coupon[0].discount_type;
+             let discount_amount = get_coupon[0].discount_amount;
+             let number_uses = parseInt(get_coupon[0].allowed_uses)
+             let discount_percentage = get_coupon[0].discount_percentage
+             let discount_currency = get_coupon[0].default_currency
+             let plan_ = get_coupon[0].subscription_plans
+             let price = document.getElementById("price_").value
+             let currency = document.getElementById("currency_").value
+             let new_price = 0
+             let uses =1;
+
+             let filterP = plan_.filter((x)=>{
+               return x === plan.plan_name
+             })
+             if(filterP.length > 0)
+             {
+                if(discount_currency===currency)
+                {
+
+                  if(uses<=number_uses)
+                    {
+                      if(discount_type==='Flat')
+                        {
+                          new_price = parseInt(price) - parseInt(discount_amount)
+                            
+                        }
+                        else if(discount_type==='Percentage')
+                        {
+                          new_price = (parseInt(price) * parseInt(discount_percentage))/100
+                        }
+                        document.getElementById("total_").value = new_price 
+                        document.getElementById("total").innerHTML = formatDollar(new_price)
+                        document.getElementById('success_message').innerHTML = 'The coupon is valid'
+                        document.getElementById('error_message').innerHTML = ''
+                    }
+                }
+                else 
+                {
+                  
+                  document.getElementById("total").innerHTML = document.getElementById('price_').value
+                  document.getElementById("total_").innerHTML = document.getElementById('price_').value
+                  document.getElementById('success_message').innerHTML = ''
+                  document.getElementById('error_message').innerHTML = 'Invalid Currency - Default Coupon Currency: '+ discount_currency
+                }
+             }
+             else 
+             {
+                document.getElementById("total").innerHTML = document.getElementById('price_').value
+                  document.getElementById("total_").innerHTML = document.getElementById('price_').value
+                  document.getElementById('success_message').innerHTML = ''
+                  document.getElementById('error_message').innerHTML = 'Current coupon is not associated with current plan.'
+             }
+            
+             
+             
+            }
+            
+            else 
+            {
+              document.getElementById("total").innerHTML = document.getElementById('price_').value
+              document.getElementById("total_").innerHTML = document.getElementById('price_').value
+              document.getElementById('success_message').innerHTML = ''
+              document.getElementById('error_message').innerHTML = 'Invalid Coupon'
+            }
+            }
+
+          })
+
+
+            // SUBMIT FORM
+            $("#FORM").submit(function (event){
+                let data_ = {
+                      vendor_id:document.getElementById("vendorID").value,
+                      product_id:document.getElementById("productID").value,
+                      quantity:document.getElementById("quantity_").value,
+                      price:document.getElementById("price_").value,
+                      email:document.getElementById("userID").value,
+                      currency:document.getElementById("currency_").value,
+                      first_name:document.getElementById("first_name").value,
+                      middle_name:document.getElementById("middle_name").value,
+                      last_name:document.getElementById("last_name").value,
+                      total:document.getElementById("total_").value,
+                      mpesa_number:document.getElementById("mpesa_number").value,
+                      airtel_number:document.getElementById("airtel_number").value,
+                      credit_number:document.getElementById("credit_number").value,
+                      credit_expires:document.getElementById("credit_expires").value,
+                      credit_cvc:document.getElementById("credit_cvc").value,
+                      plan:plan
+                }
+                
+               
+                const url = "http://localhost:8000/custom/pay_now"
+                $.post({
+                  url: url,
+                  data: data_,
+                }).done(function( data ) {
+                  if(data.success === true)
+                  {
+                  document.getElementById("order").style.display = "none"
+                  document.getElementById("success").style.display = "block"
+                  document.getElementById("checkout").style.display = "none"
+                  }
+                  else if(data.success === false)
+                  {
+                  document.getElementById("order").style.display = "none"
+                  document.getElementById("failed").style.display = "block"
+                  document.getElementById("checkout").style.display = "none"
+                  }
+                    
+                });
+                event.preventDefault();
+            })
+            
+          })
+
+
+          $('.payment_option').change(function (e) {
+             let val = e.target.value;
+             if(val === 'MPESA')
+             {
+              document.getElementById("VISA").style.display = 'none'
+               document.getElementById("AIRTEL").style.display = 'none'
+               document.getElementById("MPESA").style.display = 'block'
+             }
+             else if(val === 'AIRTEL MONEY')
+             {
+             document.getElementById("VISA").style.display = 'none'
+               document.getElementById("AIRTEL").style.display = 'block'
+               document.getElementById("MPESA").style.display = 'none'
+             }
+             else if(val==='VISA/MASTERCARD')
+             {
+               document.getElementById("VISA").style.display = 'block'
+               document.getElementById("AIRTEL").style.display = 'none'
+               document.getElementById("MPESA").style.display = 'none'
+             } 
+          });
+          
+
+          
+      })
      
  

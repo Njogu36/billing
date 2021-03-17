@@ -51,7 +51,7 @@ html(lang='en' dir='')
             
             if user.role ==='Administrator' || user.role ==='Finance'
              li.nav-item
-              a.nav-item-hold(href='#')
+              a.nav-item-hold(href='/company/transactions')
                 i.nav-icon.i-Financial
                 span.nav-text Transactions  
               .triangle
@@ -67,12 +67,7 @@ html(lang='en' dir='')
                 i.nav-icon.i-Belt-3
                 span.nav-text Catalog
               .triangle
-            if user.role === 'Administrator' || user.role ==='Technical'
-             li.nav-item(data-item='checkout')
-              a.nav-item-hold(href='#')
-                i.nav-icon.i-Checkout
-                span.nav-text Checkout
-              .triangle
+            
             if user.role === 'Administrator' || user.role ==='Finance'
              li.nav-item
               a.nav-item-hold(href='#')
@@ -96,13 +91,10 @@ html(lang='en' dir='')
             // Customers
             ul.childNav(data-parent='customers')
               li.nav-item
-                a(href='#')
+                a(href='/company/subscribers')
                   i.nav-icon.i-Clock-3
                   span.item-name Subscribers
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-4
-                  span.item-name Audience
+              
             // Catalog
             ul.childNav(data-parent='catalog')
               li.nav-item
@@ -119,16 +111,7 @@ html(lang='en' dir='')
                   i.nav-icon.i-Tag-4
                   span.item-name Coupons 
               
-            // Checkout
-            ul.childNav(data-parent='checkout')
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-3
-                  span.item-name Checkout Settings
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-4
-                  span.item-name Sales Tax Settings
+            
             // Business Accounts
             ul.childNav(data-parent='business_accounts')
               li.nav-item
@@ -146,13 +129,10 @@ html(lang='en' dir='')
             // Developer Tools
             ul.childNav(data-parent='developer_tools')
               li.nav-item
-                a(href='#')
+                a(href='/company/alerts_webhooks')
                   i.nav-icon.i-Clock-3
                   span.item-name Alert & Webhooks
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-4
-                  span.item-name Authentication
+              
         .sidebar-overlay        
             
         

@@ -1,12 +1,11 @@
 $(function(){
-    $(window).bind("load", function() { 
-
+   
         let options = subscription_plans()
-        let product_id = options.product_id
-        let vendor_id = options.vendor_id
+        let product_id = options.product_id;
+        let vendor_id = options.vendor_id;
+        let quantity =options.quantity
+        let email = options.email
+        
+       $("#subscription_plans").load("http://localhost:8000/custom/"+product_id+"/"+vendor_id+"/"+quantity+'/'+email); 
        
-        console.log(document.cookie)
-        $("#subscription_plans").load("http://192.248.35.44/custom/"+product_id+"/"+vendor_id); 
-         
-     } )    
 });

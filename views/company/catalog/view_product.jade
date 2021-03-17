@@ -51,7 +51,7 @@ html(lang='en' dir='')
             
             if user.role ==='Administrator' || user.role ==='Finance'
              li.nav-item
-              a.nav-item-hold(href='#')
+              a.nav-item-hold(href='/company/transactions')
                 i.nav-icon.i-Financial
                 span.nav-text Transactions  
               .triangle
@@ -67,12 +67,7 @@ html(lang='en' dir='')
                 i.nav-icon.i-Belt-3
                 span.nav-text Catalog
               .triangle
-            if user.role === 'Administrator' || user.role ==='Technical'
-             li.nav-item(data-item='checkout')
-              a.nav-item-hold(href='#')
-                i.nav-icon.i-Checkout
-                span.nav-text Checkout
-              .triangle
+            
             if user.role === 'Administrator' || user.role ==='Finance'
              li.nav-item
               a.nav-item-hold(href='#')
@@ -96,13 +91,10 @@ html(lang='en' dir='')
             // Customers
             ul.childNav(data-parent='customers')
               li.nav-item
-                a(href='#')
+                a(href='/company/subscribers')
                   i.nav-icon.i-Clock-3
                   span.item-name Subscribers
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-4
-                  span.item-name Audience
+             
             // Catalog
             ul.childNav(data-parent='catalog')
               li.nav-item
@@ -119,16 +111,7 @@ html(lang='en' dir='')
                   i.nav-icon.i-Tag-4
                   span.item-name Coupons 
               
-            // Checkout
-            ul.childNav(data-parent='checkout')
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-3
-                  span.item-name Checkout Settings
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-4
-                  span.item-name Sales Tax Settings
+            
             // Business Accounts
             ul.childNav(data-parent='business_accounts')
               li.nav-item
@@ -146,13 +129,9 @@ html(lang='en' dir='')
             // Developer Tools
             ul.childNav(data-parent='developer_tools')
               li.nav-item
-                a(href='#')
+                a(href='/company/alerts_webhooks')
                   i.nav-icon.i-Clock-3
                   span.item-name Alert & Webhooks
-              li.nav-item
-                a(href='#')
-                  i.nav-icon.i-Clock-4
-                  span.item-name Authentication
         .sidebar-overlay        
             
         
@@ -287,7 +266,7 @@ html(lang='en' dir='')
                       .card-title
                         h4 EDIT STYLE
                      .card-body 
-                      form.form(action='/company/edit_subscription_settings',method="POST")
+                      form.form(action='/company/edit_subscription_settings/#{product._id}',method="POST")
                        
                        .form-group
                         label(for="")  Header Background Color: 
@@ -297,7 +276,7 @@ html(lang='en' dir='')
                         input.form-control(type="color",name='header_text_color' required)
                        .form-group
                          label(for="")  Header Text Alignment:
-                         select.form-control(name="header_text_align") 
+                         select.form-control(name="header_text_alignment") 
                           option(value='left') Left
                           option(value="center") Center 
                           option(value='right') Right  
@@ -314,7 +293,7 @@ html(lang='en' dir='')
                         input.form-control(type="color",name='list_text_color' required)
                        .form-group
                          label(for="")  List Text Alignment:
-                         select.form-control(name="list_text_align",required) 
+                         select.form-control(name="list_text_alignment",required) 
                           option(value='left') Left
                           option(value="center") Center 
                           option(value='right') Right  
@@ -325,7 +304,7 @@ html(lang='en' dir='')
                        hr
                        .form-group
                         label(for="")  Footer Background Color:
-                        input.form-control(type="color",name='footer_text_color' required)
+                        input.form-control(type="color",name='footer_background_color' required)
                        .form-group
                         label(for="")  Button Background Color:
                         input.form-control(type="color",name='button_background_color' required)
@@ -340,7 +319,7 @@ html(lang='en' dir='')
                           option(value='right') Right 
                        hr
                        .form-group 
-                        button.btn.btn-primary Save
+                        button.btn.btn-primary(disabled) Save
 
                        
 
@@ -382,12 +361,13 @@ html(lang='en' dir='')
   script(src="/libraries/modal.js")
   script(src="http://localhost:8000/custom/js/subscription.min.js")
   script. 
-      function subscription_plans()
-      {
-        const options = {
-          vendor_id:document.getElementById("vendor_id").value,
-          product_id:document.getElementById("product_id").value,
+      //- function subscription_plans()
+      //- {
+      //-   const options = {
+      //-     vendor_id:document.getElementById("vendor_id").value,
+      //-     product_id:document.getElementById("product_id").value,
+      //-     subscribers:200
           
-        }
-        return options
-      } 
+      //-   }
+      //-   return options
+      //- } 
