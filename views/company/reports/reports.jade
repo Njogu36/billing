@@ -1,0 +1,251 @@
+doctype html
+html(lang='en' dir='')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1')
+    meta(http-equiv='X-UA-Compatible' content='ie=edge')
+    title Reports
+    link(rel='shortcut icon' href='/auth/assets/img/stisla-fill.svg' type='image/x-icon')
+    link(href='https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900' rel='stylesheet')
+    link(href='/accounts/dist-assets/css/themes/lite-blue.min.css' rel='stylesheet')
+    link(href='/accounts/dist-assets/css/plugins/perfect-scrollbar.min.css' rel='stylesheet')
+    link(rel="stylesheet", href="/accounts/dist-assets/css/plugins/datatables.min.css" )
+  body.text-left
+    .app-admin-wrap.layout-sidebar-large
+      .main-header
+        .logo
+         if user.type === 'Administrator'
+          img(src=user.company_icon style='width:100px' alt='')
+         if user.type ==='Company'
+          img(src=user.company_icon style='width:80px' alt='')
+       
+        .menu-toggle
+          div
+          div
+          div
+        .d-flex.align-items-center
+          
+         
+        div(style='margin: auto')
+        .header-part-right
+          // Full screen toggle
+          i.i-Full-Screen.header-icon.d-none.d-sm-inline-block(data-fullscreen='')
+          
+          
+          .dropdown
+            .user.col.align-self-end
+              
+              img#userDropdown(src='/assets/images/avatar.png' alt='' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+              .dropdown-menu.dropdown-menu-right(aria-labelledby='userDropdown')
+                .dropdown-header
+                  i.i-Lock-User.mr-1
+                  | #{user.first_name} #{user.last_name}
+                
+                a.dropdown-item(href='/logout') Sign out
+      .side-content-wrap
+        
+
+        .sidebar-left.open.rtl-ps-none(data-perfect-scrollbar='' data-suppress-scroll-x='true')
+          ul.navigation-left
+            
+            li.nav-item
+              a.nav-item-hold(href='/company/')
+                i.nav-icon.i-Dashboard
+                span.nav-text Dashboard
+              .triangle
+            
+            if user.role ==='Administrator' || user.role ==='Finance'
+             li.nav-item
+              a.nav-item-hold(href='/company/transactions')
+                i.nav-icon.i-Financial
+                span.nav-text Transactions  
+              .triangle
+            if user.role ==='Administrator'
+             li.nav-item(data-item='customers')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Business-Mens
+                span.nav-text Customers
+              .triangle
+            if user.role === 'Administrator'
+             li.nav-item(data-item='catalog')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Belt-3
+                span.nav-text Catalog
+              .triangle
+            
+            
+            
+            if user.role === 'Administrator'
+             li.nav-item(data-item='business_accounts')
+              a.nav-item-hold(href='#')
+                i.nav-icon.i-Dashboard
+                span.nav-text Business Accounts
+              .triangle
+            if user.role ==='Administrator' || user.role ==='Technical'
+             li.nav-item(data-item='developer_tools')
+               a.nav-item-hold(href='#')
+                i.nav-icon.i-Geek
+                span.nav-text Developer Tools
+               .triangle
+            
+        .sidebar-left-secondary.rtl-ps-none(data-perfect-scrollbar='' data-suppress-scroll-x='true')
+            // Customers
+            ul.childNav(data-parent='customers')
+              li.nav-item
+                a(href='/company/subscribers')
+                  i.nav-icon.i-Clock-3
+                  span.item-name Subscribers
+              
+            // Catalog
+            ul.childNav(data-parent='catalog')
+              li.nav-item
+                a(href='/company/products')
+                  i.nav-icon.i-Plaxo
+                  span.item-name Products
+              li.nav-item
+                a(href='/company/subscription_plans')
+                  i.nav-icon.i-Road-2
+                  span.item-name Subscription Plans
+              
+              li.nav-item
+                a(href='/company/coupons')
+                  i.nav-icon.i-Tag-4
+                  span.item-name Coupons 
+              
+           
+            // Business Accounts
+            ul.childNav(data-parent='business_accounts')
+              li.nav-item
+                a(href='/company/account_settings')
+                  i.nav-icon.i-Data-Settings
+                  span.item-name Account Setting
+              li.nav-item
+                a(href='/company/balance_currency')
+                  i.nav-icon.i-Circular-Point
+                  span.item-name Balance Currency 
+              li.nav-item
+                a(href='/company/team_members')
+                  i.nav-icon.i-Conference
+                  span.item-name Team Members
+            // Developer Tools
+            ul.childNav(data-parent='developer_tools')
+              li.nav-item
+                a(href='/company/alerts_webhooks')
+                  i.nav-icon.i-Clock-3
+                  span.item-name Alert & Webhooks
+             
+        .sidebar-overlay        
+            
+        
+          
+          
+          
+        
+      // =============== Left side End ================
+      .main-content-wrap.sidenav-open.d-flex.flex-column
+        // ============ Body content start =============
+        .row 
+         .col-md-12 
+            .card 
+                .card-header 
+                      .card-title
+                        h4 Dashboard
+                .card-body 
+                  .row  
+                    .col-md-3
+                     if user.role === 'Administrator'
+                      a(href="/company/subscribers") 
+                        .card.card-icon.mb-4
+                         .card-body.text-center
+                          i.i-Business-Mens
+                          p.text-muted.mt-2.mb-2 Subscribers
+                          p.text-primary.text-24.line-height-1.m-0 #{subscribers.length}
+                     if user.role !== 'Administrator'
+                      
+                        .card.card-icon.mb-4
+                         .card-body.text-center
+                          i.i-Business-Mens
+                          p.text-muted.mt-2.mb-2 Subscribers
+                          p.text-primary.text-24.line-height-1.m-0 #{subscribers.length}
+                    .col-md-3
+                     if user.role === 'Administrator'
+                      a(href="/company/products")
+                        .card.card-icon.mb-4
+                         .card-body.text-center
+                          i.i-Plaxo
+                          p.text-muted.mt-2.mb-2 Products
+                          p.text-primary.text-24.line-height-1.m-0 #{products.length}
+                     if user.role !== 'Administrator'
+                       .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Plaxo
+                          p.text-muted.mt-2.mb-2 Products
+                          p.text-primary.text-24.line-height-1.m-0 #{products.length}
+                       
+                    .col-md-3
+                     if user.role === 'Administrator'
+                      a(href="/company/subscription_plans") 
+                       .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Road-2
+                          p.text-muted.mt-2.mb-2 Subscription Plans
+                          p.text-primary.text-24.line-height-1.m-0 #{subscriptions.length}
+                     if user.role !== 'Administrator'
+                      .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Road-2
+                          p.text-muted.mt-2.mb-2 Subscription Plans
+                          p.text-primary.text-24.line-height-1.m-0 #{subscriptions.length}
+                    .col-md-3
+                     if user.role === 'Administrator'
+                      a(href="/company/coupons") 
+                       .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Tag-4
+                          p.text-muted.mt-2.mb-2 Coupons
+                          p.text-primary.text-24.line-height-1.m-0 #{coupons.length}
+                     if user.role !== 'Administrator'
+                       .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Tag-4
+                          p.text-muted.mt-2.mb-2 Coupons
+                          p.text-primary.text-24.line-height-1.m-0 #{coupons.length}
+
+                  .row 
+                    .col-md-3
+                     .card.card-icon.mb-4
+                      .card-body 
+                        .ul-widget__chart-info
+                          h5.heading TRANSACTIONS
+                          .ul-widget__chart-number
+                            h2.t-font-boldest #{currency.name} #{total_transactions}
+                    .col-md-3
+                     .card.card-icon.mb-4
+                      .card-body 
+                        .ul-widget__chart-info
+                          h5.heading SALES
+                          .ul-widget__chart-number
+                            h2.t-font-boldest #{currency.name} #{total_sales}
+                    .col-md-3
+                     .card.card-icon.mb-4
+                      .card-body 
+                        .ul-widget__chart-info
+                          h5.heading REFUNDS
+                          .ul-widget__chart-number
+                            h2.t-font-boldest #{currency.name} 0
+                            
+                                       
+                            
+                                            
+                    
+
+        
+                 
+  script(src='/accounts/dist-assets/js/plugins/jquery-3.3.1.min.js')
+  script(src='/accounts/dist-assets/js/plugins/bootstrap.bundle.min.js')
+  script(src='/accounts/dist-assets/js/plugins/perfect-scrollbar.min.js')
+  script(src='/accounts/dist-assets/js/scripts/script.min.js')
+  script(src='/accounts/dist-assets/js/scripts/sidebar.large.script.min.js')
+  script(src='/accounts/dist-assets/js/plugins/datatables.min.js')
+  script(src='/accounts/dist-assets/js/scripts/datatables.script.min.js')
+  script(src='/accounts/dist-assets/js/scripts/customizer.script.min.js')

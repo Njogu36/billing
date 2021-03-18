@@ -48,6 +48,11 @@ html(lang='en' dir='')
         .sidebar-left.open.rtl-ps-none(data-perfect-scrollbar='' data-suppress-scroll-x='true')
           ul.navigation-left
             
+            li.nav-item
+              a.nav-item-hold(href='/company/')
+                i.nav-icon.i-Dashboard
+                span.nav-text Dashboard
+              .triangle
             
             if user.role ==='Administrator' || user.role ==='Finance'
              li.nav-item
@@ -68,12 +73,8 @@ html(lang='en' dir='')
                 span.nav-text Catalog
               .triangle
             
-            if user.role === 'Administrator' || user.role ==='Finance'
-             li.nav-item
-              a.nav-item-hold(href='#')
-                i.nav-icon.i-Statistic
-                span.nav-text Reports
-              .triangle
+            
+            
             if user.role === 'Administrator'
              li.nav-item(data-item='business_accounts')
               a.nav-item-hold(href='#')
@@ -111,7 +112,7 @@ html(lang='en' dir='')
                   i.nav-icon.i-Tag-4
                   span.item-name Coupons 
               
-            
+           
             // Business Accounts
             ul.childNav(data-parent='business_accounts')
               li.nav-item
@@ -132,7 +133,7 @@ html(lang='en' dir='')
                 a(href='/company/alerts_webhooks')
                   i.nav-icon.i-Clock-3
                   span.item-name Alert & Webhooks
-              
+             
         .sidebar-overlay        
             
         
@@ -141,16 +142,119 @@ html(lang='en' dir='')
           
         
       // =============== Left side End ================
-      .main-content-wrap.sidenav-open.d-flex.flex-column
+      .main-content-wrap.sidenav-open.d-flex.flex-column(style='margin-bottom:120px') 
         // ============ Body content start =============
-        .row 
+        .row
          .col-md-12 
             .card 
                 .card-header 
                       .card-title
                         h4 Dashboard
                 .card-body 
-                 p=user.role
+                  .row  
+                    .col-md-3
+                     if user.role === 'Administrator'
+                      a(href="/company/subscribers") 
+                        .card.card-icon.mb-4
+                         .card-body.text-center
+                          i.i-Business-Mens
+                          p.text-muted.mt-2.mb-2 Subscribers
+                          p.text-primary.text-24.line-height-1.m-0 #{subscribers.length}
+                     if user.role !== 'Administrator'
+                      
+                        .card.card-icon.mb-4
+                         .card-body.text-center
+                          i.i-Business-Mens
+                          p.text-muted.mt-2.mb-2 Subscribers
+                          p.text-primary.text-24.line-height-1.m-0 #{subscribers.length}
+                    .col-md-3
+                     if user.role === 'Administrator'
+                      a(href="/company/products")
+                        .card.card-icon.mb-4
+                         .card-body.text-center
+                          i.i-Plaxo
+                          p.text-muted.mt-2.mb-2 Products
+                          p.text-primary.text-24.line-height-1.m-0 #{products.length}
+                     if user.role !== 'Administrator'
+                       .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Plaxo
+                          p.text-muted.mt-2.mb-2 Products
+                          p.text-primary.text-24.line-height-1.m-0 #{products.length}
+                       
+                    .col-md-3
+                     if user.role === 'Administrator'
+                      a(href="/company/subscription_plans") 
+                       .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Road-2
+                          p.text-muted.mt-2.mb-2 Subscription Plans
+                          p.text-primary.text-24.line-height-1.m-0 #{subscriptions.length}
+                     if user.role !== 'Administrator'
+                      .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Road-2
+                          p.text-muted.mt-2.mb-2 Subscription Plans
+                          p.text-primary.text-24.line-height-1.m-0 #{subscriptions.length}
+                    .col-md-3
+                     if user.role === 'Administrator'
+                      a(href="/company/coupons") 
+                       .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Tag-4
+                          p.text-muted.mt-2.mb-2 Coupons
+                          p.text-primary.text-24.line-height-1.m-0 #{coupons.length}
+                     if user.role !== 'Administrator'
+                       .card.card-icon.mb-4
+                        .card-body.text-center
+                          i.i-Tag-4
+                          p.text-muted.mt-2.mb-2 Coupons
+                          p.text-primary.text-24.line-height-1.m-0 #{coupons.length}
+
+                  .row 
+                    .col-md-3
+                     .card.card-icon.mb-4
+                      .card-body 
+                        .ul-widget__chart-info
+                          h5.heading TRANSACTIONS
+                          .ul-widget__chart-number
+                            h2.t-font-boldest #{currency.name} #{calculate_transactions}
+                    .col-md-3
+                     .card.card-icon.mb-4
+                      .card-body 
+                        .ul-widget__chart-info
+                          h5.heading SALES
+                          .ul-widget__chart-number
+                            h2.t-font-boldest #{currency.name} #{calculate_sales}
+                    .col-md-3
+                     .card.card-icon.mb-4
+                      .card-body 
+                        .ul-widget__chart-info
+                          h5.heading REFUNDS
+                          .ul-widget__chart-number
+                            h2.t-font-boldest #{currency.name} 0
+                            
+        .row(style='margin-top:20px') 
+         .col-md-12 
+           .card 
+            .card-header 
+              .card-title Total Sales ( Previous 12 Months) [ #{currency.name} ]
+            .card-body 
+             input#total_sales_graph(type='hidden' value=total_sales_graph)
+             canvas#myChart
+        .row(style='margin-top:20px')
+          .col-md-12 
+            .card 
+              .card-header 
+                .card-title  Total Sales Per Product [ #{currency.name} ]
+              .card-body 
+                input#sales_per_product_graph(type='hidden' value=sales_per_product_graph)
+                canvas#myChart2
+                
+                              
+                            
+                                            
+                    
 
         
                  
@@ -162,3 +266,7 @@ html(lang='en' dir='')
   script(src='/accounts/dist-assets/js/plugins/datatables.min.js')
   script(src='/accounts/dist-assets/js/scripts/datatables.script.min.js')
   script(src='/accounts/dist-assets/js/scripts/customizer.script.min.js')
+  script(src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0") 
+  script(src="/libraries/salesChart.js") 
+  script(src="/libraries/salesperproductchart.js")
+  

@@ -4,7 +4,7 @@ html(lang='en' dir='')
     meta(charset='UTF-8')
     meta(name='viewport' content='width=device-width,initial-scale=1')
     meta(http-equiv='X-UA-Compatible' content='ie=edge')
-    title Team Members
+    title Account Settings
     link(rel='shortcut icon' href='/auth/assets/img/stisla-fill.svg' type='image/x-icon')
     link(href='https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900' rel='stylesheet')
     link(href='/accounts/dist-assets/css/themes/lite-blue.min.css' rel='stylesheet')
@@ -47,6 +47,11 @@ html(lang='en' dir='')
 
         .sidebar-left.open.rtl-ps-none(data-perfect-scrollbar='' data-suppress-scroll-x='true')
           ul.navigation-left
+            li.nav-item
+              a.nav-item-hold(href='/company/')
+                i.nav-icon.i-Dashboard
+                span.nav-text Dashboard
+              .triangle
             if user.role ==='Administrator' || user.role ==='Finance'
              li.nav-item
               a.nav-item-hold(href='/company/transactions')
@@ -66,12 +71,7 @@ html(lang='en' dir='')
                 span.nav-text Catalog
               .triangle
             
-            if user.role ==='Administrator' || user.role ==='Finance'
-             li.nav-item
-              a.nav-item-hold(href='#')
-                i.nav-icon.i-Statistic
-                span.nav-text Reports
-              .triangle
+            
             if user.role ==='Administrator'
              li.nav-item(data-item='business_accounts')
               a.nav-item-hold(href='#')

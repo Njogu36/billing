@@ -40,7 +40,7 @@ const CHECK_USER = require('../middlewares/check_user')
 
 // DASHBOARD PAGE
 const DASHBOARD_PAGE = require('../company_functions/dashboard/dashboard_page')
-
+router.get('/',CHECK_USER,DASHBOARD_PAGE.dashboard_page)
 
 
 // TRANSACTIONS
@@ -72,7 +72,7 @@ const DASHBOARD_PAGE = require('../company_functions/dashboard/dashboard_page')
 //.................................................................................................................................................................................................................................................
 
 const TRANSACTION_PAGE = require('../company_functions/transactions/transaction_page')
-router.get('/',CHECK_USER,TRANSACTION_PAGE.transaction_page)
+
 router.get("/transactions",CHECK_USER,TRANSACTION_PAGE.transaction_page)
 
 
@@ -255,6 +255,9 @@ router.get('/balance_currency',CHECK_USER,BALANCE_CURRENCY_PAGE.balance_currency
 router.post('/change_currency_post',CHECK_USER,CHANGE_CURRENCY_POST.change_currency_post)
 
 
+
+
+
 //....................................................................................................................................................................................................................................................................................................................................................
 //.........................................................................................................................................................................................................................................SSSSSSSSS..............................................................GGGGGGG.............................
 //.TTTTTTTTTTTTTTTTTTT.EEEEEEEEEEEEEEEEE.........AAAAAAA.........MMMMMMMM......MMMMMMMM...........MMMMMMMM......MMMMMMMM...EEEEEEEEEEEEEEEEE...MMMMMMMM......MMMMMMMM...BBBBBBBBBBBBBBBB......EEEEEEEEEEEEEEEEE...RRRRRRRRRRRRRRRR........SSSSSSSSSSSS..............PPPPPPPPPPPPPP.........AAAAAAA.............GGGGGGGGGGGG.......GGEEEEEEEEEEEEEEEE..
@@ -327,5 +330,8 @@ const ALERT_WEBHOOKS_POST = require('../company_functions/alerts_webhooks/alert_
 
 router.get('/alerts_webhooks',CHECK_USER,ALERT_WEBHOOKS.alerts_webhooks)
 router.post('/alert_webhooks_post',CHECK_USER,ALERT_WEBHOOKS_POST.alert_webhooks_post)
+
+
+
 
 module.exports = router;

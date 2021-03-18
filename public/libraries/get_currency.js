@@ -6,7 +6,7 @@ document.getElementById("price").addEventListener('change',()=>{
     priceList.forEach((item,index)=>{
         let currency = item.value.split(" ")
 
-        $.get("http://api.currencylayer.com/live?access_key=524e16193a1c2e03f65e4dadab226a8f",(response)=>{
+        $.get("http://api.currencylayer.com/live?access_key=67d21d925539eb8a4cd95a6d4d7484a8",(response)=>{
             console.log(response.quotes)
             let myObject = response.quotes;
             let quote = "USD"+currency[0]

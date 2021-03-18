@@ -124,7 +124,34 @@ html(lang="en")
                           li.list-group-item 
                             i.fa.fa-check(style='color:green')
                             &nbsp;
+                            | #{y.name}.col-md-3(style='margin:10px') 
+                  .card 
+                    .card-header(style='background-color:#153e90') 
+                      .card-title(style='text-align:left')
+                        h4(style='color:white') #{x.plan_name}
+                    .card-body(style='background-color:whitesmoke')
+                       ul.list-group 
+                        each y in features 
+                         if y.plan_name === x.plan_name
+                          li.list-group-item 
+                            i.fa.fa-check(style='color:green')
+                            &nbsp;
                             | #{y.name}
+                             
+                        
+                       div(style='text-align:center;margin-top:20px') 
+                          each z in x.more_details.currencies 
+                            if z.default === false 
+                              span.badge.badge-primary(style='margin:2px;margin-top:5') #{z.currency}
+                            if z.default === true 
+                              h3 #{z.currency} #{z.amount}
+                            
+                          
+                       
+                    .card-footer
+
+                      button.btn.btn-primary.btn-block#main_button(data-toggle="modal" data-target='#payNow' data-whatever=x.more_details data-backdrop="static" style='background-color:#0e49b5' ) SELECT
+           
                              
                         
                        div(style='text-align:center;margin-top:20px') 
