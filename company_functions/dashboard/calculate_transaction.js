@@ -33,7 +33,7 @@ const calculate_transactions =  async (transactions,currency,quotes)=>{
 
     total = await data.reduce((x,y)=>{
         return x+y
-    })
+    },0)
   
     if(currency !=='USD')
     {

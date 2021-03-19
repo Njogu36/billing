@@ -6,6 +6,6 @@ $(function(){
         let quantity =options.quantity
         let email = options.email
         
-       $("#subscription_plans").load("http://localhost:8000/custom/"+product_id+"/"+vendor_id+"/"+quantity+'/'+email); 
+       $("#subscription_plans").load("https://2b2cdb813ab7.ngrok.io/custom/"+product_id+"/"+vendor_id+"/"+quantity+'/'+email); 
        
 });

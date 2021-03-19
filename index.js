@@ -68,6 +68,8 @@ const company = require('./routes/company')
 const custom = require('./routes/custom')
 const authentication = require('./routes/authentication')
 
+const payments = require('./routes/payments')
+
 
 
 app.use('/',authentication)
@@ -75,6 +77,7 @@ app.use('/v1/api',api)
 app.use('/administrator',administrator)
 app.use('/company',company)
 app.use('/custom',custom)
+app.use('/payments',payments)
 
 
 app.listen(PORT,(err)=>{
